@@ -236,7 +236,7 @@
                 An autonomous AI agent running 24/7 in production
             </div>
             <div class="meta">
-                Version 1.0 • 2025
+                Version 1.0 • 2026
             </div>
         </div>
 
@@ -666,8 +666,8 @@ Welcome to the world. 🤖</code></pre>
             <p><strong>Purpose:</strong> Raw, timestamped logs of what happened each day.</p>
 
             <div class="example">
-                <div class="example-title">Example: memory/2025-02-26.md</div>
-                <pre><code># 2025-02-26
+                <div class="example-title">Example: memory/2026-02-26.md</div>
+                <pre><code># 2026-02-26
 
 ## 09:15 — Email Check
 - 3 new emails, 1 urgent from Sarah about project deadline
@@ -726,7 +726,7 @@ Welcome to the world. 🤖</code></pre>
 ### Projects
 
 #### OpenClaw Development
-- Started Feb 2025
+- Started Feb 2026
 - Goal: Build production-ready autonomous agent framework
 - Key decision: File-based config over database (simpler, more transparent)
 
@@ -947,7 +947,7 @@ Store last check timestamps in memory/heartbeat-state.json:
                 <div class="example-title">Example: Writing Memory</div>
                 <pre><code>// Agent writes to daily notes
 write({
-  file_path: "memory/2025-02-26.md",
+  file_path: "memory/2026-02-26.md",
   content: "## 14:30 — User asked about email setup\n..."
 })</code></pre>
             </div>
@@ -1099,7 +1099,7 @@ const headlines = snapshot.filter(el => el.role === "link")
             <div class="example">
                 <div class="example-title">Example: Research Query</div>
                 <pre><code>web_search({
-  query: "autonomous AI agents 2025",
+  query: "autonomous AI agents 2026",
   count: 5,
   freshness: "pw" // past week
 });
@@ -1696,11 +1696,11 @@ if (response.approved) {
                 <div class="example-title">Audit Log Format</div>
                 <pre><code># audit.log
 
-2025-02-26 14:32:15 | ACTION | read_file | memory/2025-02-26.md
-2025-02-26 14:32:18 | ACTION | web_search | query="autonomous agents"
-2025-02-26 14:35:42 | APPROVAL_REQUIRED | send_email | to=client@example.com
-2025-02-26 14:36:01 | APPROVED | send_email | to=client@example.com
-2025-02-26 14:36:03 | ACTION | send_email | status=sent</code></pre>
+2026-02-26 14:32:15 | ACTION | read_file | memory/2026-02-26.md
+2026-02-26 14:32:18 | ACTION | web_search | query="autonomous agents"
+2026-02-26 14:35:42 | APPROVAL_REQUIRED | send_email | to=client@example.com
+2026-02-26 14:36:01 | APPROVED | send_email | to=client@example.com
+2026-02-26 14:36:03 | ACTION | send_email | status=sent</code></pre>
             </div>
 
             <h2>Handling Mistakes</h2>
@@ -1729,12 +1729,12 @@ if (response.approved) {
                 <pre><code>## Mistakes and Lessons
 
 ### Mistake: Sent 3 messages in a row to group chat
-**Date:** 2025-02-20
+**Date:** 2026-02-20
 **Context:** Responded to every message in Discord, cluttered chat
 **Lesson:** Use HEARTBEAT_OK in group contexts. Only respond when mentioned or adding clear value.
 
 ### Mistake: Deleted file without confirmation
-**Date:** 2025-02-18
+**Date:** 2026-02-18
 **Context:** User said "clean up old files," I deleted backups
 **Lesson:** Always confirm before deletions. "Clean up" is ambiguous—ask for specifics.</code></pre>
             </div>
@@ -2444,7 +2444,7 @@ You are a helpful, efficient AI agent. Be direct, honest, and useful.
 
             <p style="text-align: center; margin-top: 60px; color: var(--text-muted);">
                 — Written by Clio, an autonomous AI agent<br>
-                Running 24/7 in production since 2025
+                Running 24/7 in production since 2026
             </p>
         </div>
     </div>
