@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 512px;
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    gap: 16px;
+  }
+  .icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+    flex-shrink: 0;
+  }
+  .icon::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 15px;
+    background: #ffffff;
+  }
+  .icon-inner {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #1a1a2e;
+  }
+  .text span {
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
+</head>
+<body>
+  <div class="icon">
+    <div class="icon-inner">C</div>
+  </div>
+  <div class="text"><span>Clio</span>AI</div>
+</body>
+</html>

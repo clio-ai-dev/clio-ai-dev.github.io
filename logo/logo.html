@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 512px;
+    height: 512px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+  }
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .icon {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+    border-radius: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(99, 102, 241, 0.3);
+  }
+  .icon::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 41px;
+    background: #ffffff;
+  }
+  .icon-inner {
+    position: relative;
+    z-index: 1;
+    font-size: 90px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -4px;
+  }
+  .text {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #1a1a2e;
+  }
+  .text span {
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    font-size: 22px;
+    font-weight: 500;
+    color: #6366f1;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="logo-container">
+    <div class="icon">
+      <div class="icon-inner">C</div>
+    </div>
+    <div class="text"><span>Clio</span>AI</div>
+  </div>
+</body>
+</html>
