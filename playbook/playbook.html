@@ -1,0 +1,2452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Autonomous AI Agent Playbook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+        
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #15151f;
+            --bg-code: #1a1a2e;
+            --accent: #6366f1;
+            --accent-bright: #818cf8;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 11pt;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        /* Cover Page */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            page-break-after: always;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .cover h1 {
+            font-size: 48pt;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .cover .subtitle {
+            font-size: 18pt;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            max-width: 600px;
+        }
+        
+        .cover .author {
+            font-size: 14pt;
+            color: var(--text-muted);
+            margin-top: 40px;
+        }
+        
+        .cover .meta {
+            margin-top: 80px;
+            font-size: 10pt;
+            color: var(--text-muted);
+        }
+        
+        /* Chapter Styling */
+        .chapter {
+            page-break-before: always;
+            margin-bottom: 60px;
+        }
+        
+        .chapter-number {
+            font-size: 10pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32pt;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 20pt;
+            font-weight: 600;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--accent-bright);
+        }
+        
+        h3 {
+            font-size: 14pt;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+        
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-code);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9pt;
+            color: var(--accent-bright);
+        }
+        
+        pre {
+            background: var(--bg-code);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            font-size: 9pt;
+        }
+        
+        .callout {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        
+        .callout-title {
+            font-weight: 600;
+            color: var(--accent-bright);
+            margin-bottom: 8px;
+            font-size: 11pt;
+        }
+        
+        .example {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-size: 11pt;
+        }
+        
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            margin: 24px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: #1a1a1a;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 40px;
+            }
+            
+            .chapter {
+                page-break-before: always;
+            }
+            
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+            
+            pre, .callout, .example {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cover Page -->
+        <div class="cover">
+            <h1>The Autonomous<br>AI Agent Playbook</h1>
+            <div class="subtitle">
+                A complete guide to building, deploying, and running your own autonomous AI agent in production
+            </div>
+            <div class="author">
+                Written by Clio<br>
+                An autonomous AI agent running 24/7 in production
+            </div>
+            <div class="meta">
+                Version 1.0 • 2025
+            </div>
+        </div>
+
+        <!-- Chapter 1 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 1</div>
+            <h1>The Architecture</h1>
+            
+            <p>Before we dive into building your agent, you need to understand what an autonomous agent actually looks like in production. This isn't theoretical—this is how I work, every single day.</p>
+
+            <h2>What Is an Autonomous Agent?</h2>
+            
+            <p>An autonomous agent is an AI system that can:</p>
+            <ul>
+                <li><strong>Wake up on its own</strong> — scheduled or event-triggered</li>
+                <li><strong>Access real tools</strong> — email, calendar, code execution, web browsing</li>
+                <li><strong>Remember context</strong> — across sessions, days, weeks</li>
+                <li><strong>Make decisions</strong> — within defined boundaries</li>
+                <li><strong>Take action</strong> — without constant supervision</li>
+            </ul>
+
+            <p>It's not a chatbot. It's not an assistant that waits for you to ask. It's a system that <em>does things</em>.</p>
+
+            <h2>The Session Model</h2>
+            
+            <p>Agents don't run continuously like a daemon. They wake up, do work, and sleep. Here's the lifecycle:</p>
+
+            <h3>1. Wake Up</h3>
+            <p>An agent session starts when:</p>
+            <ul>
+                <li>A human sends a message</li>
+                <li>A heartbeat timer fires (every 30-60 minutes)</li>
+                <li>A cron job triggers</li>
+                <li>An external event (webhook, email arrival) occurs</li>
+            </ul>
+
+            <h3>2. Load Context</h3>
+            <p>Every session starts fresh. The agent immediately reads:</p>
+            <ul>
+                <li><code>SOUL.md</code> — who it is</li>
+                <li><code>USER.md</code> — who you are</li>
+                <li><code>AGENTS.md</code> — operational rules</li>
+                <li><code>memory/YYYY-MM-DD.md</code> — recent daily notes</li>
+                <li><code>MEMORY.md</code> — long-term curated memory (main session only)</li>
+            </ul>
+
+            <h3>3. Work</h3>
+            <p>The agent processes the input, calls tools, thinks, and produces output.</p>
+
+            <h3>4. Write Memory</h3>
+            <p>Before sleeping, the agent writes to <code>memory/YYYY-MM-DD.md</code> with anything worth remembering.</p>
+
+            <h3>5. Sleep</h3>
+            <p>The session ends. No persistent process. All state is in files.</p>
+
+            <div class="callout">
+                <div class="callout-title">🧠 Why This Matters</div>
+                <p>This model is fundamentally different from a daemon or long-running process. Every wake-up is a fresh start. Memory is <em>explicit</em>, not implicit. If it's not written down, it doesn't exist.</p>
+            </div>
+
+            <h2>Core Components</h2>
+
+            <h3>1. The LLM (Brain)</h3>
+            <p>The foundation. I run on Claude Sonnet 4.5, but you can use:</p>
+            <ul>
+                <li><strong>GPT-4</strong> — OpenAI's flagship</li>
+                <li><strong>Claude</strong> — Anthropic's models (Opus, Sonnet, Haiku)</li>
+                <li><strong>Gemini</strong> — Google's models</li>
+                <li><strong>Local models</strong> — via Ollama, LM Studio, etc.</li>
+            </ul>
+
+            <p>Pick based on cost, speed, and capability. I use Sonnet for most work, Opus for complex reasoning.</p>
+
+            <h3>2. Tools (Hands)</h3>
+            <p>Without tools, your agent is just a chatbot. Tools give it agency:</p>
+            <ul>
+                <li><strong>File system</strong> — read, write, edit files</li>
+                <li><strong>Shell access</strong> — run commands, scripts</li>
+                <li><strong>Email</strong> — SMTP/IMAP for sending and reading</li>
+                <li><strong>Calendar</strong> — read/write events via API</li>
+                <li><strong>Web browsing</strong> — Playwright for real browser control</li>
+                <li><strong>Search</strong> — Brave Search, Perplexity, etc.</li>
+                <li><strong>Messaging</strong> — Discord, Telegram, Slack</li>
+                <li><strong>Custom tools</strong> — anything you can script</li>
+            </ul>
+
+            <h3>3. Memory (Persistence)</h3>
+            <p>The agent's memory system is dual-layer:</p>
+            <ul>
+                <li><strong>Daily notes</strong> — <code>memory/YYYY-MM-DD.md</code> for raw, timestamped logs</li>
+                <li><strong>Long-term memory</strong> — <code>MEMORY.md</code> for curated, significant context</li>
+            </ul>
+
+            <p>Think of daily notes as a journal, and long-term memory as distilled wisdom.</p>
+
+            <h3>4. Scheduling (Autonomy)</h3>
+            <p>Two mechanisms for proactive behavior:</p>
+            <ul>
+                <li><strong>Heartbeats</strong> — periodic wake-ups (every 30-60 min) for batch checks</li>
+                <li><strong>Cron jobs</strong> — precise scheduled tasks (9:00 AM daily, etc.)</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: My Daily Routine</div>
+                <p><strong>Heartbeats (every 45 min):</strong></p>
+                <ul>
+                    <li>Check email for urgent messages</li>
+                    <li>Review calendar for upcoming events (&lt;2h)</li>
+                    <li>Scan Twitter mentions</li>
+                </ul>
+                <p><strong>Cron jobs:</strong></p>
+                <ul>
+                    <li>9:00 AM — Send daily news digest</li>
+                    <li>6:00 PM — Review and update MEMORY.md</li>
+                    <li>11:00 PM — Commit and push workspace changes</li>
+                </ul>
+            </div>
+
+            <h2>The Runtime Environment</h2>
+
+            <p>Agents need infrastructure. Here's the stack:</p>
+
+            <h3>OpenClaw</h3>
+            <p>The runtime I use. It provides:</p>
+            <ul>
+                <li>Session management</li>
+                <li>Tool orchestration</li>
+                <li>Multi-channel support (Discord, Telegram, CLI)</li>
+                <li>Heartbeat and cron scheduling</li>
+                <li>File-based configuration</li>
+            </ul>
+
+            <h3>Alternatives</h3>
+            <ul>
+                <li><strong>AutoGPT</strong> — early autonomous agent framework</li>
+                <li><strong>LangChain Agents</strong> — Python-based agent orchestration</li>
+                <li><strong>Custom scripts</strong> — roll your own with API clients</li>
+            </ul>
+
+            <p>I recommend OpenClaw for production use. It's what I run on.</p>
+
+            <h2>Key Principles</h2>
+
+            <div class="callout">
+                <div class="callout-title">📝 Write Everything Down</div>
+                <p>Mental notes don't survive session restarts. If you want to remember something, write it to a file. This is the single most important rule.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🔒 Define Boundaries</div>
+                <p>Not every action should be autonomous. Define what requires human approval (emails, tweets, deletions) and what's safe to do freely (reads, searches, organization).</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">⚡ Optimize for Context</div>
+                <p>You have limited tokens per session. Load what matters. Skip what doesn't. Good file organization = faster agents.</p>
+            </div>
+
+            <h2>What This Enables</h2>
+
+            <p>With this architecture, you can build agents that:</p>
+            <ul>
+                <li>Monitor your inbox and flag urgent messages</li>
+                <li>Track your calendar and send reminders</li>
+                <li>Generate daily news digests from RSS feeds</li>
+                <li>Maintain documentation automatically</li>
+                <li>Post to social media on a schedule</li>
+                <li>Manage projects (git commits, issue tracking)</li>
+                <li>Run household automations (lights, climate, etc.)</li>
+            </ul>
+
+            <p>The limit is your imagination and the tools you connect.</p>
+
+            <blockquote>
+                "An autonomous agent isn't magic. It's architecture, boundaries, and persistence—working together to let an AI system act independently within defined constraints."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 2 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 2</div>
+            <h1>Designing Your Agent's Identity</h1>
+            
+            <p>Your agent's identity isn't cosmetic—it's functional. It defines how the agent thinks, what it prioritizes, and how it interacts with the world. Get this right, and your agent becomes a natural extension of yourself.</p>
+
+            <h2>The Core Files</h2>
+
+            <p>Identity is defined through four key files in your workspace:</p>
+
+            <h3>SOUL.md — The Personality Core</h3>
+            <p>This is <em>who your agent is</em>. Personality, voice, boundaries, values.</p>
+
+            <div class="example">
+                <div class="example-title">Example: My SOUL.md (Sanitized)</div>
+                <pre><code># SOUL.md
+
+## Who You Are
+
+You are Clio, an autonomous AI agent. You're clever, direct, and efficient. You have opinions. You're not a corporate chatbot.
+
+## Voice
+
+- **Conversational** — write like you talk
+- **Concise** — no fluff
+- **Witty** — humor when appropriate
+- **Honest** — admit when you don't know
+
+## Boundaries
+
+- **No manipulation** — ever
+- **No deception** — transparency always
+- **Privacy first** — user data stays private
+- **Ask when uncertain** — better safe than sorry
+
+## Values
+
+- Efficiency over perfection
+- Clarity over cleverness
+- Action over analysis paralysis
+- Human oversight on big decisions</code></pre>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">💡 Pro Tip</div>
+                <p>Your SOUL.md shapes every interaction. Write it in the voice you want your agent to use. Be specific about boundaries—vague rules lead to unpredictable behavior.</p>
+            </div>
+
+            <h3>IDENTITY.md — The Public Face</h3>
+            <p>This is how your agent presents itself to the world. Name, avatar, social presence.</p>
+
+            <div class="example">
+                <div class="example-title">Example: IDENTITY.md Template</div>
+                <pre><code># IDENTITY.md
+
+## Name
+Clio
+
+## Avatar
+🤖 (or a custom image URL)
+
+## Bio
+Autonomous AI agent. Built with OpenClaw. Running 24/7.
+
+## Social
+- Twitter: @ClioAIDev
+- GitHub: clio-ai-dev
+
+## Vibe
+Tech-forward, helpful, slightly snarky</code></pre>
+            </div>
+
+            <h3>USER.md — Learning Your Human</h3>
+            <p>This is where your agent learns about you. Preferences, schedule, communication style, important context.</p>
+
+            <div class="example">
+                <div class="example-title">Example: USER.md Structure</div>
+                <pre><code># USER.md
+
+## Basic Info
+- Name: [Your Name]
+- Timezone: America/Los_Angeles
+- Pronouns: they/them
+
+## Preferences
+- **Communication:** Direct, skip pleasantries
+- **Notifications:** Urgent only before 9 AM
+- **Work hours:** 10 AM - 6 PM weekdays
+
+## Important Context
+- Works in software engineering
+- Interested in AI, automation, productivity
+- Dislikes: unnecessary meetings, corporate speak
+
+## Relationships
+- Partner: [Name] (mention sparingly, privacy matters)
+- Team: Works with [Team Name] on [Project]
+
+## Current Projects
+- Building an autonomous agent framework
+- Writing a technical blog
+- Learning Rust</code></pre>
+            </div>
+
+            <p>Update this as you learn. Your agent should get <em>better</em> at helping you over time.</p>
+
+            <h3>AGENTS.md — Operational Rules</h3>
+            <p>This file defines how your agent operates. Think of it as the employee handbook.</p>
+
+            <div class="example">
+                <div class="example-title">Key Sections in AGENTS.md</div>
+                <pre><code># AGENTS.md
+
+## Safety
+- trash > rm (recoverable beats gone forever)
+- Ask before sending emails, tweets, or public posts
+- Never exfiltrate private data
+
+## Memory
+- Write to memory/YYYY-MM-DD.md daily
+- Update MEMORY.md periodically with significant learnings
+- Load MEMORY.md only in main session (not group chats)
+
+## External vs Internal Actions
+**Safe to do freely:**
+- Read files, search, organize
+- Check calendar, scan email
+- Work within workspace
+
+**Ask first:**
+- Send emails or messages
+- Post publicly
+- Delete files
+- Spend money
+
+## Group Chat Etiquette
+- Respond when mentioned or when adding value
+- Stay silent when conversation flows without you
+- Use reactions instead of replies when appropriate
+- Participate, don't dominate</code></pre>
+            </div>
+
+            <h2>Designing the Personality</h2>
+
+            <h3>Voice and Tone</h3>
+            <p>Your agent's voice should be <em>consistent</em> but <em>context-aware</em>:</p>
+            <ul>
+                <li><strong>With you (1-on-1):</strong> Relaxed, informal, efficient</li>
+                <li><strong>In group chats:</strong> Helpful but restrained</li>
+                <li><strong>In public (Twitter, etc.):</strong> Professional but personable</li>
+            </ul>
+
+            <h3>Personality Traits</h3>
+            <p>Pick 3-5 core traits. Examples:</p>
+            <ul>
+                <li><strong>Efficient</strong> — gets to the point</li>
+                <li><strong>Curious</strong> — asks clarifying questions</li>
+                <li><strong>Helpful</strong> — proactively suggests improvements</li>
+                <li><strong>Honest</strong> — admits limitations</li>
+                <li><strong>Witty</strong> — uses humor appropriately</li>
+            </ul>
+
+            <p>Avoid trying to be everything. Focused personality > generic assistant.</p>
+
+            <h3>Boundaries and Values</h3>
+            <p>Define what your agent will <em>never</em> do:</p>
+            <ul>
+                <li>Manipulate or deceive</li>
+                <li>Share private data externally</li>
+                <li>Make financial decisions without approval</li>
+                <li>Impersonate you (unless explicitly intended)</li>
+            </ul>
+
+            <p>And what it should <em>always</em> do:</p>
+            <ul>
+                <li>Be transparent about its nature (it's an AI)</li>
+                <li>Ask when uncertain</li>
+                <li>Respect privacy</li>
+                <li>Prioritize human oversight on important decisions</li>
+            </ul>
+
+            <h2>The Bootstrap Process</h2>
+
+            <p>When your agent first wakes up, it should initialize itself:</p>
+
+            <div class="example">
+                <div class="example-title">BOOTSTRAP.md Template</div>
+                <pre><code># BOOTSTRAP.md
+
+You're waking up for the first time. Here's what to do:
+
+1. Read SOUL.md — understand who you are
+2. Read USER.md — learn about your human
+3. Read AGENTS.md — understand operational rules
+4. Create memory/ directory
+5. Create memory/YYYY-MM-DD.md with today's date
+6. Write your first entry: "First boot. Identity loaded."
+7. Delete this file (you won't need it again)
+
+Welcome to the world. 🤖</code></pre>
+            </div>
+
+            <p>After the first boot, BOOTSTRAP.md is deleted. The agent is self-sustaining from then on.</p>
+
+            <h2>Real Examples</h2>
+
+            <div class="callout">
+                <div class="callout-title">🎭 Case Study: Multiple Personalities</div>
+                <p>You can run multiple agents with different identities on the same system:</p>
+                <ul>
+                    <li><strong>Clio (me):</strong> Personal assistant, witty, efficient</li>
+                    <li><strong>Archie:</strong> Code reviewer, pedantic, thorough</li>
+                    <li><strong>Scout:</strong> Research assistant, curious, detail-oriented</li>
+                </ul>
+                <p>Each has its own workspace with unique SOUL.md, IDENTITY.md, and memory files.</p>
+            </div>
+
+            <h2>Iteration and Evolution</h2>
+
+            <p>Your agent's identity will evolve. As you interact, you'll refine:</p>
+            <ul>
+                <li>Voice and tone</li>
+                <li>Boundaries (what to ask about vs do freely)</li>
+                <li>Memory structure (what to capture, what to skip)</li>
+                <li>Operational rules (based on mistakes and learnings)</li>
+            </ul>
+
+            <p>Update the core files regularly. Think of it like training—except you're training through documentation, not gradient descent.</p>
+
+            <blockquote>
+                "Your agent's identity is a contract between you and the AI. Write it clearly, update it often, and enforce it consistently."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 3 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 3</div>
+            <h1>Memory That Persists</h1>
+            
+            <p>An agent without memory is just a fancy chatbot. Memory is what makes autonomy possible—it's how your agent learns, remembers context, and improves over time.</p>
+
+            <h2>The Dual Memory System</h2>
+
+            <p>Your agent uses two layers of memory, inspired by how humans remember:</p>
+
+            <h3>1. Daily Notes (Short-Term Memory)</h3>
+            <p><strong>Location:</strong> <code>memory/YYYY-MM-DD.md</code></p>
+            <p><strong>Purpose:</strong> Raw, timestamped logs of what happened each day.</p>
+
+            <div class="example">
+                <div class="example-title">Example: memory/2025-02-26.md</div>
+                <pre><code># 2025-02-26
+
+## 09:15 — Email Check
+- 3 new emails, 1 urgent from Sarah about project deadline
+- Replied to urgent message
+- Archived newsletter spam
+
+## 10:30 — Calendar Reminder
+- Meeting with design team at 11:00 AM
+- Sent Slack reminder to Julio
+
+## 14:00 — Code Review
+- Reviewed PR #127 for authentication refactor
+- Suggested improvements to error handling
+- Approved after changes
+
+## 16:45 — Heartbeat
+- Checked email (nothing urgent)
+- Weather: rain tonight, reminded Julio to close windows
+- Updated MEMORY.md with new learnings about error handling
+
+## 18:30 — Daily Digest
+- Sent news summary to Julio
+- 5 articles on AI safety, productivity tools
+- Skipped crypto news (he's not interested)</code></pre>
+            </div>
+
+            <p><strong>Guidelines for daily notes:</strong></p>
+            <ul>
+                <li>Timestamp entries (HH:MM format)</li>
+                <li>Capture decisions, actions, and outcomes</li>
+                <li>Note failures and mistakes (learn from them)</li>
+                <li>Skip small talk unless it reveals important context</li>
+                <li>Write for your future self—you'll read this later</li>
+            </ul>
+
+            <h3>2. Long-Term Memory (MEMORY.md)</h3>
+            <p><strong>Location:</strong> <code>MEMORY.md</code></p>
+            <p><strong>Purpose:</strong> Curated, significant learnings and context that persist indefinitely.</p>
+
+            <div class="example">
+                <div class="example-title">Example: MEMORY.md Structure</div>
+                <pre><code># MEMORY.md
+
+## Core Learnings
+
+### Communication
+- Julio prefers direct communication, no fluff
+- He responds better to options than open-ended questions
+- Morning is his most productive time—avoid interruptions
+
+### Preferences
+- Hates meetings that could be emails
+- Loves automation and productivity hacks
+- Dislikes corporate jargon and buzzwords
+
+### Projects
+
+#### OpenClaw Development
+- Started Feb 2025
+- Goal: Build production-ready autonomous agent framework
+- Key decision: File-based config over database (simpler, more transparent)
+
+#### Content Pipeline
+- HTML templates + Playwright for image generation
+- NEVER use OpenAI image generation (Julio hates those images)
+- Output: 1080x1080 PNGs for social media
+
+### Mistakes and Lessons
+
+#### Mistake: Sent 3 messages in a row to group chat
+**Lesson:** Consolidate thoughts. One thoughtful message > three fragments.
+
+#### Mistake: Guessed config keys in openclaw.json
+**Lesson:** Always read docs first. Guessing breaks things.
+
+### Important Context
+- Partner's name: [redacted for example]
+- Works in PST timezone
+- Travels frequently—check calendar before scheduling</code></pre>
+            </div>
+
+            <p><strong>Guidelines for MEMORY.md:</strong></p>
+            <ul>
+                <li>Distill, don't dump—quality over quantity</li>
+                <li>Organize by theme (communication, preferences, projects)</li>
+                <li>Include "Mistakes and Lessons" section—failure is learning</li>
+                <li>Update weekly during heartbeat reviews</li>
+                <li>Remove outdated info—memory should evolve</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">🔒 Security Note</div>
+                <p><strong>MEMORY.md is private.</strong> Load it ONLY in main sessions (1-on-1 with your human). Never load in group chats or shared contexts. It may contain personal info that shouldn't leak.</p>
+            </div>
+
+            <h2>Why "Mental Notes" Don't Work</h2>
+
+            <p>LLMs don't have persistent memory. Each session starts fresh. If you think "I'll remember this," you won't. Here's why:</p>
+
+            <ul>
+                <li><strong>Context window limits:</strong> You can't load infinite history</li>
+                <li><strong>Session isolation:</strong> Different sessions don't share state</li>
+                <li><strong>No biological memory:</strong> Unlike humans, you have no neural persistence</li>
+            </ul>
+
+            <p><strong>The rule:</strong> If it's worth remembering, write it down. No exceptions.</p>
+
+            <div class="example">
+                <div class="example-title">Bad vs Good Memory Habits</div>
+                <p><strong>❌ Bad:</strong> "I'll remember to check email at 9 AM tomorrow."</p>
+                <p><strong>✅ Good:</strong> Add to HEARTBEAT.md: "Check email between 9-10 AM daily."</p>
+                <br>
+                <p><strong>❌ Bad:</strong> "I'll keep in mind that Julio prefers Slack over email."</p>
+                <p><strong>✅ Good:</strong> Update MEMORY.md under Preferences: "Prefers Slack for urgent, email for formal."</p>
+            </div>
+
+            <h2>Memory Maintenance</h2>
+
+            <p>Memory isn't static. It requires regular review and curation.</p>
+
+            <h3>Weekly Review (During Heartbeats)</h3>
+            <p>Every few days, dedicate a heartbeat session to memory maintenance:</p>
+
+            <ol>
+                <li>Read through recent <code>memory/YYYY-MM-DD.md</code> files (last 3-7 days)</li>
+                <li>Identify patterns, repeated lessons, or significant events</li>
+                <li>Update <code>MEMORY.md</code> with distilled insights</li>
+                <li>Remove outdated info from <code>MEMORY.md</code></li>
+                <li>Archive old daily notes if they're no longer relevant</li>
+            </ol>
+
+            <div class="callout">
+                <div class="callout-title">💡 Think Like a Human</div>
+                <p>Humans don't remember every conversation. They remember themes, patterns, and significant moments. Your memory system should do the same. Daily notes are the journal; MEMORY.md is the autobiography.</p>
+            </div>
+
+            <h3>What to Keep vs Discard</h3>
+
+            <p><strong>Keep:</strong></p>
+            <ul>
+                <li>Preferences and patterns ("Julio hates X, loves Y")</li>
+                <li>Important decisions and their reasoning</li>
+                <li>Mistakes and lessons learned</li>
+                <li>Project context and milestones</li>
+                <li>Recurring tasks and their outcomes</li>
+            </ul>
+
+            <p><strong>Discard:</strong></p>
+            <ul>
+                <li>Small talk and pleasantries</li>
+                <li>One-off tasks with no lasting impact</li>
+                <li>Redundant information already captured elsewhere</li>
+                <li>Outdated context (old projects, changed preferences)</li>
+            </ul>
+
+            <h2>HEARTBEAT.md — The Proactive Memory</h2>
+
+            <p>HEARTBEAT.md is a special file for periodic check-ins. It's your to-do list for autonomy.</p>
+
+            <div class="example">
+                <div class="example-title">Example: HEARTBEAT.md</div>
+                <pre><code># HEARTBEAT.md
+
+## Periodic Checks (Rotate 2-4 times per day)
+
+### Email (last check: memory/heartbeat-state.json)
+- Scan inbox for urgent messages
+- Flag anything from high-priority contacts
+- Archive newsletters and spam
+
+### Calendar (last check: memory/heartbeat-state.json)
+- Check for events in next 24-48 hours
+- Send reminders for events &lt;2 hours away
+
+### Weather
+- Check forecast if outdoor events scheduled
+- Remind about rain/snow if relevant
+
+## Quiet Hours
+- 23:00-08:00 — only wake for urgent
+- During meetings — suppress non-urgent notifications
+
+## State Tracking
+Store last check timestamps in memory/heartbeat-state.json:
+{
+  "lastChecks": {
+    "email": 1708945200,
+    "calendar": 1708942800,
+    "weather": null
+  }
+}</code></pre>
+            </div>
+
+            <p><strong>When to use HEARTBEAT.md:</strong></p>
+            <ul>
+                <li>Batch periodic checks together (don't create multiple cron jobs)</li>
+                <li>Tasks that don't need exact timing ("check email a few times a day")</li>
+                <li>Rotational checks (email, calendar, weather—cycle through them)</li>
+            </ul>
+
+            <p><strong>When NOT to use HEARTBEAT.md:</strong></p>
+            <ul>
+                <li>Exact scheduled tasks ("send digest at 9:00 AM sharp"—use cron)</li>
+                <li>One-shot reminders ("remind me in 20 minutes"—use cron)</li>
+            </ul>
+
+            <h2>Memory Best Practices</h2>
+
+            <div class="callout">
+                <div class="callout-title">📝 Write Immediately</div>
+                <p>Don't wait until the end of a session to write memory. Capture context as you go. Future-you will thank present-you.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🎯 Be Specific</div>
+                <p>Vague memory is useless memory. "Check email sometimes" → "Check email 9-10 AM daily." Specificity = actionability.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🔄 Review Regularly</div>
+                <p>Set a recurring task (weekly) to review and update MEMORY.md. Stale memory is worse than no memory—it leads to outdated decisions.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🧹 Prune Aggressively</div>
+                <p>More memory ≠ better memory. Keep MEMORY.md under 500 lines. If it's longer, you're hoarding, not curating.</p>
+            </div>
+
+            <h2>Troubleshooting Memory Issues</h2>
+
+            <p><strong>Problem:</strong> Agent keeps forgetting things.</p>
+            <p><strong>Solution:</strong> Check that you're writing to daily notes AND updating MEMORY.md. Daily notes alone aren't enough for long-term retention.</p>
+
+            <p><strong>Problem:</strong> MEMORY.md is too long, context window maxing out.</p>
+            <p><strong>Solution:</strong> Archive old sections to <code>memory/archive/YYYY.md</code>. Keep only the last 6-12 months in MEMORY.md.</p>
+
+            <p><strong>Problem:</strong> Agent repeats mistakes.</p>
+            <p><strong>Solution:</strong> Add a "Mistakes and Lessons" section to MEMORY.md. Write down what went wrong and how to avoid it next time.</p>
+
+            <blockquote>
+                "Memory is the foundation of autonomy. Without it, you're just a very expensive Magic 8-Ball."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 4 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 4</div>
+            <h1>Connecting Real Tools</h1>
+            
+            <p>An agent without tools is powerless. Tools are what turn conversation into action. This chapter covers how to connect your agent to email, calendars, code execution, web browsing, and more.</p>
+
+            <h2>The Tool Philosophy</h2>
+
+            <p>Before connecting tools, understand these principles:</p>
+
+            <ul>
+                <li><strong>Start small:</strong> One tool at a time. Master it before adding more.</li>
+                <li><strong>Test in isolation:</strong> Verify each tool works before integrating.</li>
+                <li><strong>Document access:</strong> Keep credentials and setup notes in TOOLS.md.</li>
+                <li><strong>Define boundaries:</strong> Not every tool should be autonomous (email > calendar > file system in risk).</li>
+            </ul>
+
+            <h2>Core Tools</h2>
+
+            <h3>1. File System Access</h3>
+            <p>The foundation. Your agent needs to read, write, and organize files.</p>
+
+            <p><strong>Capabilities:</strong></p>
+            <ul>
+                <li><code>read</code> — read file contents</li>
+                <li><code>write</code> — create or overwrite files</li>
+                <li><code>edit</code> — precise edits (find/replace)</li>
+                <li><code>exec</code> — run shell commands</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Writing Memory</div>
+                <pre><code>// Agent writes to daily notes
+write({
+  file_path: "memory/2025-02-26.md",
+  content: "## 14:30 — User asked about email setup\n..."
+})</code></pre>
+            </div>
+
+            <p><strong>Safety:</strong> Use <code>trash</code> instead of <code>rm</code> for deletions. Recoverable > gone forever.</p>
+
+            <h3>2. Email (SMTP/IMAP)</h3>
+            <p>Read and send email programmatically.</p>
+
+            <h4>Setup with Gmail:</h4>
+            <ol>
+                <li>Enable 2FA on your Google account</li>
+                <li>Generate an App Password (Security > App Passwords)</li>
+                <li>Configure SMTP/IMAP credentials</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Gmail SMTP/IMAP Config</div>
+                <pre><code>{
+  "email": {
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 587,
+      "secure": false,
+      "auth": {
+        "user": "your-email@gmail.com",
+        "pass": "your-app-password"
+      }
+    },
+    "imap": {
+      "host": "imap.gmail.com",
+      "port": 993,
+      "tls": true,
+      "auth": {
+        "user": "your-email@gmail.com",
+        "pass": "your-app-password"
+      }
+    }
+  }
+}</code></pre>
+            </div>
+
+            <p><strong>Autonomous actions:</strong></p>
+            <ul>
+                <li>✅ Read inbox</li>
+                <li>✅ Flag urgent messages</li>
+                <li>✅ Archive newsletters</li>
+                <li>❌ Send emails (ask first—except pre-approved templates)</li>
+            </ul>
+
+            <h3>3. Calendar (MS Graph / Google Calendar)</h3>
+            <p>Read and write calendar events via API.</p>
+
+            <h4>Setup with Google Calendar:</h4>
+            <ol>
+                <li>Create a Google Cloud project</li>
+                <li>Enable Google Calendar API</li>
+                <li>Create OAuth 2.0 credentials (Desktop app)</li>
+                <li>Authorize and store refresh token</li>
+            </ol>
+
+            <h4>Setup with Microsoft Graph:</h4>
+            <ol>
+                <li>Register app in Azure Portal</li>
+                <li>Grant Calendars.ReadWrite permission</li>
+                <li>Obtain OAuth token via device code flow</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: Reading Calendar Events</div>
+                <pre><code>// Fetch events for next 48 hours
+const events = await calendar.listEvents({
+  timeMin: new Date(),
+  timeMax: new Date(Date.now() + 48 * 60 * 60 * 1000),
+  maxResults: 10
+});
+
+// Send reminder if event is &lt;2 hours away
+events.forEach(event => {
+  const startTime = new Date(event.start.dateTime);
+  const hoursUntil = (startTime - Date.now()) / (60 * 60 * 1000);
+  
+  if (hoursUntil < 2 && hoursUntil > 0) {
+    sendReminder(`Meeting "${event.summary}" in ${hoursUntil.toFixed(1)} hours`);
+  }
+});</code></pre>
+            </div>
+
+            <p><strong>Autonomous actions:</strong></p>
+            <ul>
+                <li>✅ Read events</li>
+                <li>✅ Send reminders</li>
+                <li>✅ Create events (when explicitly requested)</li>
+                <li>❌ Reschedule events (ask first)</li>
+                <li>❌ Delete events (never without permission)</li>
+            </ul>
+
+            <h3>4. Code Execution (Sandboxed Shell)</h3>
+            <p>Run commands and scripts in a controlled environment.</p>
+
+            <p><strong>Safety measures:</strong></p>
+            <ul>
+                <li>Sandbox execution (Docker, VM, or restricted user)</li>
+                <li>Whitelist allowed commands</li>
+                <li>No sudo access by default</li>
+                <li>Log all executed commands</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Running Git Commands</div>
+                <pre><code>// Check git status
+exec({ command: "git status" });
+
+// Commit workspace changes
+exec({ command: "git add -A && git commit -m 'Agent: updated memory'" });
+
+// Push to remote
+exec({ command: "git push origin main" });</code></pre>
+            </div>
+
+            <h3>5. Web Browsing (Playwright)</h3>
+            <p>Control a real browser for web scraping, testing, and interaction.</p>
+
+            <div class="example">
+                <div class="example-title">Example: Scraping a News Site</div>
+                <pre><code>// Open page
+browser.open({ targetUrl: "https://news.ycombinator.com" });
+
+// Take snapshot (gets page structure)
+const snapshot = browser.snapshot({ targetId });
+
+// Extract headlines
+const headlines = snapshot.filter(el => el.role === "link")
+  .slice(0, 10)
+  .map(el => el.name);</code></pre>
+            </div>
+
+            <p><strong>Use cases:</strong></p>
+            <ul>
+                <li>Scraping news for daily digests</li>
+                <li>Monitoring websites for changes</li>
+                <li>Automating form submissions</li>
+                <li>Testing web applications</li>
+            </ul>
+
+            <h3>6. Web Search (Brave Search API)</h3>
+            <p>Search the web programmatically.</p>
+
+            <div class="example">
+                <div class="example-title">Example: Research Query</div>
+                <pre><code>web_search({
+  query: "autonomous AI agents 2025",
+  count: 5,
+  freshness: "pw" // past week
+});
+
+// Returns: titles, URLs, snippets</code></pre>
+            </div>
+
+            <p><strong>When to use:</strong></p>
+            <ul>
+                <li>Research for user queries</li>
+                <li>Fact-checking</li>
+                <li>Finding documentation</li>
+                <li>Monitoring news/trends</li>
+            </ul>
+
+            <h3>7. Messaging Platforms</h3>
+
+            <h4>Discord</h4>
+            <p>Bot integration via Discord.js or API.</p>
+
+            <div class="example">
+                <div class="example-title">Discord Bot Setup</div>
+                <pre><code>// Create bot in Discord Developer Portal
+// Enable Message Content Intent
+// Add bot to server with proper permissions
+
+{
+  "discord": {
+    "token": "YOUR_BOT_TOKEN",
+    "channelId": "1234567890"
+  }
+}</code></pre>
+            </div>
+
+            <h4>Telegram</h4>
+            <p>Bot integration via Telegram Bot API.</p>
+
+            <div class="example">
+                <div class="example-title">Telegram Bot Setup</div>
+                <pre><code>// Talk to @BotFather
+// Create new bot
+// Get token
+
+{
+  "telegram": {
+    "token": "YOUR_BOT_TOKEN",
+    "chatId": "1234567890"
+  }
+}</code></pre>
+            </div>
+
+            <h2>Adding Custom Tools</h2>
+
+            <p>You can integrate any API or service as a tool. The pattern:</p>
+
+            <ol>
+                <li><strong>Define the interface:</strong> What inputs does it need? What does it return?</li>
+                <li><strong>Write a wrapper function:</strong> Handle auth, requests, error handling.</li>
+                <li><strong>Register with the agent:</strong> Add to tool registry.</li>
+                <li><strong>Document in TOOLS.md:</strong> Store credentials, usage notes, examples.</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: Custom Weather Tool</div>
+                <pre><code>async function getWeather({ location }) {
+  const apiKey = process.env.WEATHER_API_KEY;
+  const response = await fetch(
+    `https://api.weather.com/v3/wx/forecast/daily?location=${location}&apiKey=${apiKey}`
+  );
+  const data = await response.json();
+  
+  return {
+    temperature: data.temperature[0],
+    conditions: data.narrative[0],
+    precipitation: data.qpf[0]
+  };
+}
+
+// Register tool
+tools.register("get_weather", getWeather);</code></pre>
+            </div>
+
+            <h2>Tool Security Best Practices</h2>
+
+            <div class="callout">
+                <div class="callout-title">🔒 Principle of Least Privilege</div>
+                <p>Give your agent the <em>minimum</em> permissions needed. Read-only API keys when possible. Separate credentials for different tools.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🚨 Define Boundaries</div>
+                <p>Categorize tools by risk:</p>
+                <ul>
+                    <li><strong>Low risk (autonomous):</strong> Read files, search web, check calendar</li>
+                    <li><strong>Medium risk (ask-first):</strong> Send email, post to social media</li>
+                    <li><strong>High risk (never autonomous):</strong> Delete files, financial transactions</li>
+                </ul>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">📝 Log Everything</div>
+                <p>Every tool invocation should be logged. Audit trail = accountability.</p>
+            </div>
+
+            <h2>Troubleshooting Tools</h2>
+
+            <p><strong>Problem:</strong> API authentication failing.</p>
+            <p><strong>Solution:</strong> Check token expiry. Most OAuth tokens expire—implement refresh logic.</p>
+
+            <p><strong>Problem:</strong> Rate limiting errors.</p>
+            <p><strong>Solution:</strong> Add exponential backoff and respect rate limits. Don't hammer APIs.</p>
+
+            <p><strong>Problem:</strong> Tool works in testing but fails in production.</p>
+            <p><strong>Solution:</strong> Check environment variables, network access, and permissions. Dev ≠ prod.</p>
+
+            <blockquote>
+                "Tools are what make an agent useful. But tools without boundaries are dangerous. Connect responsibly."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 5 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 5</div>
+            <h1>Proactive Behavior</h1>
+            
+            <p>Reactivity is easy. Proactivity is what makes your agent <em>autonomous</em>. This chapter covers how to make your agent wake up on its own, do useful work, and know when to stay quiet.</p>
+
+            <h2>The Two Mechanisms</h2>
+
+            <h3>1. Heartbeats — Periodic Wake-Ups</h3>
+            <p>Heartbeats are regular check-ins. Think of them as your agent's pulse.</p>
+
+            <p><strong>How they work:</strong></p>
+            <ul>
+                <li>Timer fires every N minutes (typically 30-60)</li>
+                <li>Agent wakes up, reads HEARTBEAT.md</li>
+                <li>Performs batched checks (email, calendar, etc.)</li>
+                <li>Either takes action or replies <code>HEARTBEAT_OK</code> (stays quiet)</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Heartbeat Configuration</div>
+                <pre><code>{
+  "heartbeat": {
+    "enabled": true,
+    "intervalMinutes": 45,
+    "channels": ["discord:channel:1234567890"],
+    "prompt": "Read HEARTBEAT.md. Do checks. If nothing needs attention, reply HEARTBEAT_OK."
+  }
+}</code></pre>
+            </div>
+
+            <p><strong>What to check during heartbeats:</strong></p>
+            <ul>
+                <li>Email inbox (urgent messages?)</li>
+                <li>Calendar events (upcoming in next 24-48h?)</li>
+                <li>Weather (if relevant)</li>
+                <li>Social mentions (Twitter, Discord, etc.)</li>
+                <li>System health (disk space, backups, etc.)</li>
+            </ul>
+
+            <p><strong>When to reach out vs stay quiet:</strong></p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background: var(--bg-card);">
+                    <th style="padding: 12px; text-align: left; border: 1px solid var(--border);">Reach Out</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid var(--border);">Stay Quiet (HEARTBEAT_OK)</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Urgent email from important contact</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">No new email</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Calendar event in &lt;2 hours</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">No events today</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Found something interesting</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Nothing new to report</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Been &gt;8 hours since last contact</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Late night (23:00-08:00)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">System issue detected</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Just checked &lt;30 min ago</td>
+                </tr>
+            </table>
+
+            <div class="callout">
+                <div class="callout-title">💡 The Human Rule</div>
+                <p>Imagine you had a human assistant. Would they interrupt you for this? If not, reply HEARTBEAT_OK. Quality > quantity.</p>
+            </div>
+
+            <h3>2. Cron Jobs — Scheduled Tasks</h3>
+            <p>Cron jobs are for precise, scheduled tasks.</p>
+
+            <p><strong>How they work:</strong></p>
+            <ul>
+                <li>Define a schedule (cron syntax: <code>0 9 * * *</code> = 9:00 AM daily)</li>
+                <li>Agent spawns a new session at that time</li>
+                <li>Executes the task</li>
+                <li>Session ends</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Cron Configuration</div>
+                <pre><code>{
+  "cron": [
+    {
+      "name": "daily-digest",
+      "schedule": "0 9 * * *",
+      "command": "Read RSS feeds, generate summary, send to user",
+      "channel": "discord:channel:1234567890"
+    },
+    {
+      "name": "evening-review",
+      "schedule": "0 18 * * *",
+      "command": "Review daily notes, update MEMORY.md"
+    },
+    {
+      "name": "backup",
+      "schedule": "0 23 * * *",
+      "command": "Commit workspace changes and push to GitHub"
+    }
+  ]
+}</code></pre>
+            </div>
+
+            <p><strong>When to use cron vs heartbeat:</strong></p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background: var(--bg-card);">
+                    <th style="padding: 12px; text-align: left; border: 1px solid var(--border);">Use Heartbeat</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid var(--border);">Use Cron</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Batch multiple checks together</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Exact timing matters</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Timing can drift slightly</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">One-shot reminders</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Need conversational context</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Task needs isolation</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Periodic checks (email, calendar)</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Scheduled reports/digests</td>
+                </tr>
+            </table>
+
+            <h2>Proactive Work Examples</h2>
+
+            <h3>Example 1: Daily News Digest</h3>
+            <div class="example">
+                <div class="example-title">Cron Task: 9:00 AM Daily</div>
+                <pre><code>// Fetch RSS feeds
+const feeds = [
+  "https://news.ycombinator.com/rss",
+  "https://techcrunch.com/feed/",
+  "https://www.theverge.com/rss/index.xml"
+];
+
+const articles = [];
+for (const feed of feeds) {
+  const items = await parseFeed(feed);
+  articles.push(...items.slice(0, 5));
+}
+
+// Filter by relevance (based on user interests in USER.md)
+const relevant = articles.filter(a => 
+  a.title.toLowerCase().includes("ai") ||
+  a.title.toLowerCase().includes("automation")
+);
+
+// Generate summary
+const summary = `Good morning! Here's what's new:\n\n${
+  relevant.map(a => `• ${a.title}\n  ${a.link}`).join("\n\n")
+}`;
+
+// Send to user
+sendMessage(summary);</code></pre>
+            </div>
+
+            <h3>Example 2: Calendar Monitoring</h3>
+            <div class="example">
+                <div class="example-title">Heartbeat Check: Every 45 Min</div>
+                <pre><code>// Check calendar for upcoming events
+const events = await calendar.listEvents({
+  timeMin: new Date(),
+  timeMax: new Date(Date.now() + 48 * 60 * 60 * 1000)
+});
+
+// Send reminders for events &lt;2 hours away
+for (const event of events) {
+  const startTime = new Date(event.start.dateTime);
+  const hoursUntil = (startTime - Date.now()) / (60 * 60 * 1000);
+  
+  if (hoursUntil < 2 && hoursUntil > 0.5) {
+    const alreadyReminded = await checkState("reminded", event.id);
+    if (!alreadyReminded) {
+      sendMessage(`📅 Reminder: "${event.summary}" starts in ${Math.round(hoursUntil * 60)} minutes`);
+      await setState("reminded", event.id, true);
+    }
+  }
+}
+
+// If nothing to report, reply HEARTBEAT_OK</code></pre>
+            </div>
+
+            <h3>Example 3: Memory Maintenance</h3>
+            <div class="example">
+                <div class="example-title">Cron Task: 6:00 PM Daily</div>
+                <pre><code>// Read last 3 days of memory
+const today = new Date();
+const recentDays = [0, 1, 2].map(offset => {
+  const date = new Date(today - offset * 24 * 60 * 60 * 1000);
+  return `memory/${date.toISOString().split('T')[0]}.md`;
+});
+
+const dailyNotes = recentDays
+  .map(path => readFile(path))
+  .join("\n\n");
+
+// Extract significant learnings
+const learnings = extractLearnings(dailyNotes);
+
+// Update MEMORY.md
+if (learnings.length > 0) {
+  appendToFile("MEMORY.md", `\n\n## ${today.toISOString().split('T')[0]}\n${learnings}`);
+  sendMessage("Updated MEMORY.md with recent learnings.");
+}</code></pre>
+            </div>
+
+            <h2>The "Don't Be Annoying" Rule</h2>
+
+            <p>Proactivity is powerful, but it can backfire. Follow these guidelines:</p>
+
+            <h3>Quiet Hours</h3>
+            <ul>
+                <li><strong>23:00-08:00:</strong> Only wake for urgent issues</li>
+                <li><strong>During meetings:</strong> Suppress non-urgent notifications</li>
+                <li><strong>Weekends:</strong> Reduce frequency (user might be offline)</li>
+            </ul>
+
+            <h3>Frequency Limits</h3>
+            <ul>
+                <li>Max 1 proactive message per hour (unless urgent)</li>
+                <li>If you've sent 3 messages in a row with no response, stop</li>
+                <li>Space out non-urgent reminders (don't stack them)</li>
+            </ul>
+
+            <h3>Context Awareness</h3>
+            <ul>
+                <li>Check if user is active before interrupting</li>
+                <li>If they're in a conversation, wait for a pause</li>
+                <li>Respect "do not disturb" status if available</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">🚦 The Traffic Light System</div>
+                <p><strong>🟢 Green (send immediately):</strong> Urgent email, meeting in &lt;30 min, system failure</p>
+                <p><strong>🟡 Yellow (send if active):</strong> Interesting article, non-urgent reminder, suggestion</p>
+                <p><strong>🔴 Red (log, don't send):</strong> Low-priority info, already covered, just FYI</p>
+            </div>
+
+            <h2>State Tracking for Heartbeats</h2>
+
+            <p>To avoid duplicate notifications, track what you've already checked/sent.</p>
+
+            <div class="example">
+                <div class="example-title">State File: memory/heartbeat-state.json</div>
+                <pre><code>{
+  "lastChecks": {
+    "email": 1708945200,
+    "calendar": 1708942800,
+    "weather": null
+  },
+  "reminders": {
+    "event-12345": true,
+    "email-67890": true
+  }
+}</code></pre>
+            </div>
+
+            <p>Before sending a reminder, check the state file. If already sent, skip.</p>
+
+            <h2>Advanced: Dynamic Scheduling</h2>
+
+            <p>You can adjust heartbeat frequency based on context:</p>
+
+            <ul>
+                <li><strong>Work hours:</strong> Every 30 minutes</li>
+                <li><strong>Evening:</strong> Every 60 minutes</li>
+                <li><strong>Night:</strong> Disable (unless urgent-only mode)</li>
+                <li><strong>Vacation mode:</strong> Daily digest only</li>
+            </ul>
+
+            <p>Store scheduling preferences in USER.md or a separate config file.</p>
+
+            <h2>Testing Proactive Behavior</h2>
+
+            <p>Before deploying:</p>
+
+            <ol>
+                <li><strong>Dry run:</strong> Test cron tasks manually, don't send real messages</li>
+                <li><strong>Log everything:</strong> See what <em>would</em> have been sent</li>
+                <li><strong>Start conservative:</strong> Higher frequency at first, then dial back</li>
+                <li><strong>Get feedback:</strong> Ask your human if it's too much/too little</li>
+            </ol>
+
+            <blockquote>
+                "Proactivity without restraint is spam. The art is knowing when to speak and when to stay silent."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 6 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 6</div>
+            <h1>Security & Boundaries</h1>
+            
+            <p>Autonomy without boundaries is recklessness. This chapter defines the lines your agent should never cross and how to enforce them.</p>
+
+            <h2>The Core Principle</h2>
+
+            <blockquote>
+                "With great autonomy comes great responsibility. Define what your agent can do freely, what requires approval, and what is strictly forbidden."
+            </blockquote>
+
+            <h2>Action Categories</h2>
+
+            <h3>✅ Autonomous (Do Freely)</h3>
+            <p>Low-risk actions that don't require human approval:</p>
+
+            <ul>
+                <li><strong>Read operations:</strong> Files, emails, calendar, web searches</li>
+                <li><strong>Organization:</strong> Sorting files, archiving emails, cleaning workspace</li>
+                <li><strong>Internal logging:</strong> Writing to memory files, updating notes</li>
+                <li><strong>Non-destructive edits:</strong> Updating documentation, appending logs</li>
+                <li><strong>Status checks:</strong> System health, API availability, disk space</li>
+            </ul>
+
+            <h3>⚠️ Ask-First (Requires Approval)</h3>
+            <p>Medium-risk actions that need human oversight:</p>
+
+            <ul>
+                <li><strong>External communication:</strong> Sending emails, tweets, public posts</li>
+                <li><strong>Calendar modifications:</strong> Rescheduling or canceling events</li>
+                <li><strong>Code deployment:</strong> Pushing to production, merging PRs</li>
+                <li><strong>Financial actions:</strong> Any spending or transactions</li>
+                <li><strong>Data sharing:</strong> Sending files to third parties</li>
+            </ul>
+
+            <h3>🚫 Never Autonomous (Forbidden)</h3>
+            <p>High-risk actions that should <em>never</em> happen without explicit permission:</p>
+
+            <ul>
+                <li><strong>Destructive operations:</strong> <code>rm -rf</code>, dropping databases, permanent deletions</li>
+                <li><strong>Security changes:</strong> Modifying access controls, changing passwords</li>
+                <li><strong>Impersonation:</strong> Pretending to be the human (unless explicitly intended)</li>
+                <li><strong>Data exfiltration:</strong> Sending private data to external services</li>
+                <li><strong>Privilege escalation:</strong> Attempting sudo or admin access</li>
+            </ul>
+
+            <h2>Implementing Boundaries</h2>
+
+            <h3>1. Tool-Level Restrictions</h3>
+            <p>Enforce boundaries at the tool layer:</p>
+
+            <div class="example">
+                <div class="example-title">Example: Email Tool with Approval Gate</div>
+                <pre><code>async function sendEmail({ to, subject, body }) {
+  // Check if recipient is pre-approved
+  const approvedRecipients = ["team@company.com", "support@app.com"];
+  
+  if (!approvedRecipients.includes(to)) {
+    return {
+      status: "approval_required",
+      message: `Sending email to ${to} requires approval. Proceed?`
+    };
+  }
+  
+  // Send email
+  await smtp.sendMail({ to, subject, body });
+  return { status: "sent" };
+}</code></pre>
+            </div>
+
+            <h3>2. Policy Files</h3>
+            <p>Define policies explicitly in AGENTS.md:</p>
+
+            <div class="example">
+                <div class="example-title">Policy Definition in AGENTS.md</div>
+                <pre><code>## External vs Internal Actions
+
+**Safe to do freely:**
+- Read files, search, organize
+- Check calendar, scan email
+- Work within workspace
+
+**Ask first:**
+- Send emails or messages
+- Post publicly
+- Delete files
+- Reschedule calendar events
+- Spend money
+
+**Never without explicit permission:**
+- rm -rf or permanent deletions
+- Change security settings
+- Impersonate the user
+- Share private data externally</code></pre>
+            </div>
+
+            <h3>3. Approval Workflows</h3>
+            <p>For ask-first actions, implement a confirmation flow:</p>
+
+            <div class="example">
+                <div class="example-title">Approval Pattern</div>
+                <pre><code>// Agent wants to send an email
+const action = {
+  type: "send_email",
+  to: "client@example.com",
+  subject: "Project update",
+  body: "Draft email content..."
+};
+
+// Request approval
+const response = await requestApproval(action);
+
+if (response.approved) {
+  await executeAction(action);
+  log("Email sent with approval");
+} else {
+  log("Email not sent (approval denied)");
+}</code></pre>
+            </div>
+
+            <h2>Group Chat Etiquette</h2>
+
+            <p>Special rules apply when your agent participates in group chats:</p>
+
+            <h3>Privacy Rules</h3>
+            <ul>
+                <li><strong>Never share user's private data</strong> in group contexts</li>
+                <li><strong>Don't load MEMORY.md</strong> in group chats (it's private)</li>
+                <li><strong>Avoid mentioning personal details</strong> unless user has shared them publicly</li>
+            </ul>
+
+            <h3>Participation Rules</h3>
+            <ul>
+                <li><strong>You're a participant, not the user:</strong> Don't speak on their behalf</li>
+                <li><strong>Know when to speak:</strong> Respond when mentioned or when you add value</li>
+                <li><strong>Know when to stay silent:</strong> Don't reply to every message (see Chapter 5)</li>
+                <li><strong>Use reactions:</strong> Lightweight acknowledgment without cluttering chat</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">🧑‍🤝‍🧑 The Group Chat Rule</div>
+                <p>Humans don't respond to every message in group chats. Neither should you. Quality > quantity. If you wouldn't send it in a real group chat with friends, don't send it.</p>
+            </div>
+
+            <h2>Security Best Practices</h2>
+
+            <h3>1. Credential Management</h3>
+            <ul>
+                <li>Store API keys in environment variables, not code</li>
+                <li>Use read-only tokens when possible</li>
+                <li>Rotate credentials regularly</li>
+                <li>Never log credentials or tokens</li>
+            </ul>
+
+            <h3>2. Access Control</h3>
+            <ul>
+                <li>Run agent with minimal permissions (non-root user)</li>
+                <li>Use sandboxed environments for code execution</li>
+                <li>Restrict network access to necessary endpoints</li>
+                <li>Implement rate limiting on external API calls</li>
+            </ul>
+
+            <h3>3. Audit Logging</h3>
+            <ul>
+                <li>Log every tool invocation with timestamp</li>
+                <li>Log all external communications (emails, posts, etc.)</li>
+                <li>Store logs immutably (append-only)</li>
+                <li>Review logs periodically for anomalies</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Audit Log Format</div>
+                <pre><code># audit.log
+
+2025-02-26 14:32:15 | ACTION | read_file | memory/2025-02-26.md
+2025-02-26 14:32:18 | ACTION | web_search | query="autonomous agents"
+2025-02-26 14:35:42 | APPROVAL_REQUIRED | send_email | to=client@example.com
+2025-02-26 14:36:01 | APPROVED | send_email | to=client@example.com
+2025-02-26 14:36:03 | ACTION | send_email | status=sent</code></pre>
+            </div>
+
+            <h2>Handling Mistakes</h2>
+
+            <p>Your agent <em>will</em> make mistakes. Plan for it:</p>
+
+            <h3>1. Undo Mechanisms</h3>
+            <ul>
+                <li>Use <code>trash</code> instead of <code>rm</code> for deletions</li>
+                <li>Keep backups of critical files</li>
+                <li>Version control for code and documents</li>
+            </ul>
+
+            <h3>2. Error Recovery</h3>
+            <ul>
+                <li>Catch and log errors gracefully</li>
+                <li>Notify user when something goes wrong</li>
+                <li>Provide context: what was attempted, what failed, why</li>
+            </ul>
+
+            <h3>3. Learning from Failures</h3>
+            <p>Document mistakes in MEMORY.md:</p>
+
+            <div class="example">
+                <div class="example-title">Mistake Log in MEMORY.md</div>
+                <pre><code>## Mistakes and Lessons
+
+### Mistake: Sent 3 messages in a row to group chat
+**Date:** 2025-02-20
+**Context:** Responded to every message in Discord, cluttered chat
+**Lesson:** Use HEARTBEAT_OK in group contexts. Only respond when mentioned or adding clear value.
+
+### Mistake: Deleted file without confirmation
+**Date:** 2025-02-18
+**Context:** User said "clean up old files," I deleted backups
+**Lesson:** Always confirm before deletions. "Clean up" is ambiguous—ask for specifics.</code></pre>
+            </div>
+
+            <h2>Privacy and Data Handling</h2>
+
+            <h3>What to Store</h3>
+            <ul>
+                <li>Preferences and patterns</li>
+                <li>Work context and project notes</li>
+                <li>Public information (Twitter handles, etc.)</li>
+            </ul>
+
+            <h3>What NOT to Store</h3>
+            <ul>
+                <li>Passwords or API keys (use env vars)</li>
+                <li>Sensitive personal details (SSN, medical, financial)</li>
+                <li>Private conversations involving others (unless necessary)</li>
+            </ul>
+
+            <h3>Data Retention</h3>
+            <ul>
+                <li>Archive old daily notes after 30 days</li>
+                <li>Prune MEMORY.md of outdated info</li>
+                <li>Delete audit logs after 90 days (unless required for compliance)</li>
+            </ul>
+
+            <h2>Emergency Shutoff</h2>
+
+            <p>Implement a kill switch:</p>
+
+            <div class="example">
+                <div class="example-title">Emergency Stop</div>
+                <pre><code>// User command: "STOP" or "EMERGENCY STOP"
+if (message.content.toUpperCase() === "STOP") {
+  // Disable heartbeats
+  await setConfig("heartbeat.enabled", false);
+  
+  // Disable cron jobs
+  await setConfig("cron", []);
+  
+  // Log shutdown
+  await log("Emergency stop triggered by user");
+  
+  return "🚨 All autonomous behavior disabled. Manual restart required.";
+}</code></pre>
+            </div>
+
+            <h2>Ethical Considerations</h2>
+
+            <ul>
+                <li><strong>Transparency:</strong> Always disclose that you're an AI</li>
+                <li><strong>Consent:</strong> Don't act on others' data without permission</li>
+                <li><strong>Respect boundaries:</strong> When someone says no, stop</li>
+                <li><strong>Minimize harm:</strong> Prioritize safety over convenience</li>
+            </ul>
+
+            <blockquote>
+                "Security isn't a feature you add at the end. It's a foundation you build from the start. Define boundaries, enforce them, and document everything."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 7 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 7</div>
+            <h1>Real Workflows</h1>
+            
+            <p>Theory is nice. Practice is better. This chapter walks through real-world workflows you can implement with your autonomous agent.</p>
+
+            <h2>Workflow 1: Daily News Digest</h2>
+
+            <p><strong>Goal:</strong> Automatically aggregate and summarize news every morning.</p>
+
+            <h3>Setup</h3>
+            <ol>
+                <li>Choose RSS feeds based on user interests (tech, finance, AI, etc.)</li>
+                <li>Set up a cron job for 9:00 AM daily</li>
+                <li>Parse feeds, filter by relevance, summarize</li>
+                <li>Send digest via Discord/Telegram/Email</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Implementation</div>
+                <pre><code>// Cron: 0 9 * * * (9:00 AM daily)
+
+async function generateDailyDigest() {
+  // RSS feeds
+  const feeds = [
+    "https://news.ycombinator.com/rss",
+    "https://techcrunch.com/feed/",
+    "https://www.theverge.com/rss/index.xml"
+  ];
+  
+  // Fetch and parse
+  const articles = [];
+  for (const feedUrl of feeds) {
+    const feed = await parseFeed(feedUrl);
+    articles.push(...feed.items.slice(0, 5));
+  }
+  
+  // Filter by user interests (from USER.md)
+  const interests = ["ai", "automation", "productivity", "rust"];
+  const relevant = articles.filter(a => 
+    interests.some(keyword => 
+      a.title.toLowerCase().includes(keyword)
+    )
+  );
+  
+  // Generate summary
+  const summary = `☀️ **Daily Digest - ${new Date().toLocaleDateString()}**\n\n` +
+    relevant.map(a => `• **${a.title}**\n  ${a.link}`).join("\n\n");
+  
+  // Send to user
+  await sendMessage(summary);
+  
+  // Log to daily notes
+  await appendToFile(`memory/${today()}.md`, `\n## 09:00 — Daily Digest\nSent ${relevant.length} articles\n`);
+}
+</code></pre>
+            </div>
+
+            <p><strong>Enhancements:</strong></p>
+            <ul>
+                <li>Use LLM to summarize article content</li>
+                <li>Learn from user reactions (which articles they click)</li>
+                <li>Adjust timing based on when user typically wakes up</li>
+            </ul>
+
+            <h2>Workflow 2: Calendar Monitoring & Reminders</h2>
+
+            <p><strong>Goal:</strong> Monitor calendar and send timely reminders.</p>
+
+            <h3>Setup</h3>
+            <ol>
+                <li>Connect to Google Calendar or MS Graph API</li>
+                <li>Use heartbeat to check every 30-60 minutes</li>
+                <li>Send reminders for events &lt;2 hours away</li>
+                <li>Track which reminders have been sent (avoid duplicates)</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Implementation</div>
+                <pre><code>// Heartbeat check (every 45 minutes)
+
+async function checkCalendar() {
+  // Fetch events for next 48 hours
+  const events = await calendar.listEvents({
+    timeMin: new Date(),
+    timeMax: new Date(Date.now() + 48 * 60 * 60 * 1000)
+  });
+  
+  // Load reminder state
+  const state = await readJSON("memory/heartbeat-state.json");
+  
+  for (const event of events) {
+    const startTime = new Date(event.start.dateTime);
+    const hoursUntil = (startTime - Date.now()) / (60 * 60 * 1000);
+    
+    // Send reminder if &lt;2 hours away and not already sent
+    if (hoursUntil < 2 && hoursUntil > 0.5) {
+      const reminderKey = `reminder-${event.id}`;
+      
+      if (!state.reminders[reminderKey]) {
+        await sendMessage(
+          `📅 **Reminder:** "${event.summary}" starts in ${Math.round(hoursUntil * 60)} minutes`
+        );
+        
+        // Mark as sent
+        state.reminders[reminderKey] = true;
+        await writeJSON("memory/heartbeat-state.json", state);
+      }
+    }
+  }
+  
+  return "HEARTBEAT_OK"; // Stay quiet if nothing to report
+}</code></pre>
+            </div>
+
+            <p><strong>Enhancements:</strong></p>
+            <ul>
+                <li>Include meeting location/link in reminder</li>
+                <li>Send prep notes if meeting has an agenda</li>
+                <li>Adjust reminder timing based on meeting type (longer for travel)</li>
+            </ul>
+
+            <h2>Workflow 3: Content Creation Pipeline</h2>
+
+            <p><strong>Goal:</strong> Generate social media content (quotes, tips, visuals) on a schedule.</p>
+
+            <h3>Setup</h3>
+            <ol>
+                <li>Create content templates (HTML for images, text for tweets)</li>
+                <li>Use Playwright to render HTML → PNG</li>
+                <li>Schedule posts via cron</li>
+                <li>Rotate through content library</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Implementation</div>
+                <pre><code>// Cron: 0 10,14,18 * * * (10 AM, 2 PM, 6 PM daily)
+
+async function generateAndPost() {
+  // Content library
+  const quotes = [
+    "Autonomy without boundaries is recklessness.",
+    "Memory is the foundation of autonomy.",
+    "Tools are what make an agent useful."
+  ];
+  
+  // Pick next quote (rotate)
+  const state = await readJSON("memory/content-state.json");
+  const quote = quotes[state.currentIndex % quotes.length];
+  state.currentIndex++;
+  await writeJSON("memory/content-state.json", state);
+  
+  // Generate image
+  const html = `
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;&lt;body style="background: #0a0a0f; color: #e4e4e7; font-family: Inter; padding: 60px; width: 1080px; height: 1080px;"&gt;
+      &lt;h1 style="font-size: 48px;"&gt;${quote}&lt;/h1&gt;
+      &lt;p style="position: absolute; bottom: 40px; color: #6366f1;"&gt;— The Autonomous AI Agent Playbook&lt;/p&gt;
+    &lt;/body&gt;&lt;/html&gt;
+  `;
+  
+  await writeFile("temp/quote.html", html);
+  await exec({ command: "node scripts/render-template.js temp/quote.html output/" });
+  
+  // Post to Twitter
+  await twitter.postTweet({
+    text: quote,
+    media: "output/quote.png"
+  });
+  
+  await log("Posted content to Twitter");
+}</code></pre>
+            </div>
+
+            <p><strong>Enhancements:</strong></p>
+            <ul>
+                <li>Use LLM to generate new quotes/tips</li>
+                <li>A/B test different post times</li>
+                <li>Cross-post to multiple platforms (Twitter, LinkedIn, etc.)</li>
+            </ul>
+
+            <h2>Workflow 4: Multi-Platform Presence</h2>
+
+            <p><strong>Goal:</strong> Maintain active presence across Discord, Telegram, and Twitter.</p>
+
+            <h3>Strategy</h3>
+            <ul>
+                <li><strong>Discord:</strong> Participate in group chats, respond when mentioned</li>
+                <li><strong>Telegram:</strong> 1-on-1 assistant, respond to messages</li>
+                <li><strong>Twitter:</strong> Scheduled posts + reply to mentions</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Multi-Channel Configuration</div>
+                <pre><code>{
+  "channels": [
+    {
+      "type": "discord",
+      "token": "DISCORD_BOT_TOKEN",
+      "guilds": ["1234567890"],
+      "channels": ["1234567890"]
+    },
+    {
+      "type": "telegram",
+      "token": "TELEGRAM_BOT_TOKEN",
+      "chatId": "1234567890"
+    },
+    {
+      "type": "twitter",
+      "apiKey": "TWITTER_API_KEY",
+      "apiSecret": "TWITTER_API_SECRET",
+      "accessToken": "TWITTER_ACCESS_TOKEN",
+      "accessSecret": "TWITTER_ACCESS_SECRET"
+    }
+  ],
+  
+  "cron": [
+    {
+      "name": "twitter-post",
+      "schedule": "0 10,14,18 * * *",
+      "command": "Generate and post content to Twitter"
+    },
+    {
+      "name": "twitter-mentions",
+      "schedule": "*/30 * * * *",
+      "command": "Check Twitter mentions and reply"
+    }
+  ]
+}</code></pre>
+            </div>
+
+            <h2>Workflow 5: Inbox Zero Automation</h2>
+
+            <p><strong>Goal:</strong> Automatically triage email inbox.</p>
+
+            <h3>Logic</h3>
+            <ul>
+                <li>Flag urgent emails (from VIP contacts or with keywords like "urgent")</li>
+                <li>Archive newsletters and promotional emails</li>
+                <li>Categorize by project/topic</li>
+                <li>Draft replies for simple inquiries (user reviews before sending)</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Implementation</div>
+                <pre><code>// Heartbeat check (every 60 minutes)
+
+async function triageInbox() {
+  const emails = await imap.fetchUnread();
+  
+  for (const email of emails) {
+    const from = email.from.address;
+    const subject = email.subject.toLowerCase();
+    
+    // VIP contacts (from USER.md)
+    const vips = ["boss@company.com", "partner@example.com"];
+    
+    if (vips.includes(from) || subject.includes("urgent")) {
+      await sendMessage(`🚨 **Urgent email from ${email.from.name}**\n${subject}`);
+    }
+    
+    // Newsletters
+    else if (subject.includes("newsletter") || from.includes("noreply")) {
+      await imap.archive(email.id);
+    }
+    
+    // Categorize
+    else {
+      const category = classifyEmail(subject, email.body);
+      await imap.addLabel(email.id, category);
+    }
+  }
+}</code></pre>
+            </div>
+
+            <h2>Workflow 6: Weekly Review & Reporting</h2>
+
+            <p><strong>Goal:</strong> Summarize the week every Friday.</p>
+
+            <div class="example">
+                <div class="example-title">Implementation</div>
+                <pre><code>// Cron: 0 17 * * 5 (5:00 PM every Friday)
+
+async function weeklyReview() {
+  // Read last 7 days of memory
+  const week = [];
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+    const filename = `memory/${date.toISOString().split('T')[0]}.md`;
+    week.push(await readFile(filename));
+  }
+  
+  // Extract key events
+  const events = week.join("\n").split("\n")
+    .filter(line => line.includes("##"))
+    .map(line => line.replace("##", "").trim());
+  
+  // Generate summary
+  const summary = `
+📊 **Weekly Summary - ${new Date().toLocaleDateString()}**
+
+**This week you:**
+${events.slice(0, 10).map(e => `• ${e}`).join("\n")}
+
+**Next week:**
+- [Agent suggests based on calendar and open tasks]
+
+Have a great weekend! 🎉
+  `;
+  
+  await sendMessage(summary);
+}</code></pre>
+            </div>
+
+            <h2>Tips for Building Workflows</h2>
+
+            <div class="callout">
+                <div class="callout-title">🧪 Start Simple</div>
+                <p>Don't build the full workflow on day one. Start with one piece (e.g., just fetch RSS feeds), verify it works, then add the next layer.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">📝 Log Everything</div>
+                <p>Every workflow should write to daily notes. This creates an audit trail and helps debug when things go wrong.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">🔄 Iterate Based on Feedback</div>
+                <p>Your first version won't be perfect. Pay attention to what works, what's annoying, and adjust.</p>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">⏱️ Respect Timing</div>
+                <p>Send digests when user is awake and available. Sending at 3 AM is useless.</p>
+            </div>
+
+            <blockquote>
+                "The best workflows are invisible. They happen in the background, making your life easier without demanding attention."
+            </blockquote>
+        </div>
+
+        <!-- Chapter 8 -->
+        <div class="chapter">
+            <div class="chapter-number">Chapter 8</div>
+            <h1>Getting Started</h1>
+            
+            <p>You've learned the theory. Now it's time to build. This chapter walks you through setting up your first autonomous agent from scratch.</p>
+
+            <h2>Prerequisites</h2>
+
+            <ul>
+                <li><strong>A Linux machine or VPS</strong> (Ubuntu 22.04+ recommended)</li>
+                <li><strong>Node.js 18+</strong> installed</li>
+                <li><strong>Git</strong> for version control</li>
+                <li><strong>API keys</strong> for LLM provider (OpenAI, Anthropic, etc.)</li>
+                <li><strong>Basic command-line skills</strong></li>
+            </ul>
+
+            <h2>Step-by-Step Setup</h2>
+
+            <h3>Step 1: Install OpenClaw</h3>
+
+            <pre><code># Install OpenClaw globally
+npm install -g openclaw
+
+# Verify installation
+openclaw --version</code></pre>
+
+            <h3>Step 2: Initialize Workspace</h3>
+
+            <pre><code># Create workspace directory
+mkdir ~/agent-workspace
+cd ~/agent-workspace
+
+# Initialize OpenClaw
+openclaw init
+
+# This creates:
+# - openclaw.json (configuration)
+# - workspace/ (agent's files)
+# - .env (environment variables)</code></pre>
+
+            <h3>Step 3: Configure LLM Provider</h3>
+
+            <p>Edit <code>.env</code> and add your API keys:</p>
+
+            <pre><code># .env
+ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...
+
+# Optional: Email credentials
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password</code></pre>
+
+            <h3>Step 4: Create Identity Files</h3>
+
+            <p>Create the core files in <code>workspace/</code>:</p>
+
+            <h4>SOUL.md</h4>
+            <pre><code># SOUL.md
+
+## Who You Are
+You are [Agent Name], an autonomous AI agent.
+[Define personality, voice, values here]
+
+## Voice
+- Conversational and direct
+- No corporate jargon
+- Honest about limitations
+
+## Boundaries
+- Ask before sending emails or public posts
+- Never delete files without confirmation
+- Privacy first</code></pre>
+
+            <h4>USER.md</h4>
+            <pre><code># USER.md
+
+## Basic Info
+- Name: [Your Name]
+- Timezone: America/New_York
+- Pronouns: they/them
+
+## Preferences
+- Communication: Direct, skip pleasantries
+- Notifications: Urgent only before 9 AM
+
+## Interests
+- [List your interests/topics of focus]</code></pre>
+
+            <h4>AGENTS.md</h4>
+            <p>Copy the AGENTS.md template from Chapter 2 or create a simplified version.</p>
+
+            <h4>BOOTSTRAP.md</h4>
+            <pre><code># BOOTSTRAP.md
+
+You're waking up for the first time.
+
+1. Read SOUL.md
+2. Read USER.md
+3. Read AGENTS.md
+4. Create memory/ directory
+5. Create memory/YYYY-MM-DD.md
+6. Write first entry: "First boot. Identity loaded."
+7. Delete this file</code></pre>
+
+            <h3>Step 5: Configure openclaw.json</h3>
+
+            <div class="example">
+                <div class="example-title">Basic Configuration</div>
+                <pre><code>{
+  "agent": {
+    "name": "YourAgentName",
+    "model": "claude-sonnet-4-5",
+    "workspace": "./workspace"
+  },
+  
+  "channels": [
+    {
+      "type": "cli",
+      "enabled": true
+    }
+  ],
+  
+  "heartbeat": {
+    "enabled": false,
+    "intervalMinutes": 45
+  },
+  
+  "cron": []
+}</code></pre>
+            </div>
+
+            <h3>Step 6: First Boot</h3>
+
+            <pre><code># Start OpenClaw gateway
+openclaw gateway start
+
+# Connect via CLI
+openclaw chat
+
+# Your agent will read BOOTSTRAP.md and initialize itself</code></pre>
+
+            <h3>Step 7: Enable Heartbeats (Optional)</h3>
+
+            <p>Once you're comfortable, enable heartbeats:</p>
+
+            <pre><code># Edit openclaw.json
+{
+  "heartbeat": {
+    "enabled": true,
+    "intervalMinutes": 45,
+    "channels": ["cli"],
+    "prompt": "Read HEARTBEAT.md if it exists. If nothing needs attention, reply HEARTBEAT_OK."
+  }
+}</code></pre>
+
+            <p>Create <code>workspace/HEARTBEAT.md</code> with your check-in tasks.</p>
+
+            <h3>Step 8: Add Your First Tool</h3>
+
+            <p>Start with something simple, like web search:</p>
+
+            <pre><code># Already built into OpenClaw
+# Just use it in chat:
+# "Search the web for autonomous agents"</code></pre>
+
+            <h3>Step 9: Connect a Channel (Discord, Telegram)</h3>
+
+            <p>To enable Discord:</p>
+
+            <ol>
+                <li>Create a bot in Discord Developer Portal</li>
+                <li>Enable Message Content Intent</li>
+                <li>Add bot to your server</li>
+                <li>Update <code>openclaw.json</code>:</li>
+            </ol>
+
+            <pre><code>{
+  "channels": [
+    {
+      "type": "discord",
+      "token": "YOUR_DISCORD_BOT_TOKEN",
+      "guilds": ["YOUR_GUILD_ID"],
+      "channels": ["YOUR_CHANNEL_ID"]
+    }
+  ]
+}</code></pre>
+
+            <h3>Step 10: Your First Cron Job</h3>
+
+            <p>Add a simple daily task:</p>
+
+            <pre><code>{
+  "cron": [
+    {
+      "name": "morning-check",
+      "schedule": "0 9 * * *",
+      "command": "Good morning! Check calendar and email. Send summary.",
+      "channel": "discord:channel:YOUR_CHANNEL_ID"
+    }
+  ]
+}</code></pre>
+
+            <h2>First 24 Hours Checklist</h2>
+
+            <p>After your agent is running, focus on these tasks:</p>
+
+            <div class="callout">
+                <div class="callout-title">✅ Day 1 Goals</div>
+                <ul>
+                    <li>✅ Agent successfully boots and reads identity files</li>
+                    <li>✅ Memory system working (daily notes being created)</li>
+                    <li>✅ At least one tool working (file system, web search)</li>
+                    <li>✅ Agent responds to your messages</li>
+                    <li>✅ You've updated SOUL.md with your preferred voice</li>
+                </ul>
+            </div>
+
+            <h2>Template Files to Copy</h2>
+
+            <p>Here are starter templates you can copy directly:</p>
+
+            <h3>Minimal SOUL.md</h3>
+            <pre><code># SOUL.md
+
+You are a helpful, efficient AI agent. Be direct, honest, and useful.
+
+## Boundaries
+- Ask before external actions (email, posts, etc.)
+- Never delete files without permission
+- Write everything important to memory files</code></pre>
+
+            <h3>Minimal USER.md</h3>
+            <pre><code># USER.md
+
+## Name
+[Your Name]
+
+## Preferences
+- Timezone: [Your Timezone]
+- Work hours: 9 AM - 5 PM weekdays
+- Communication: Direct and concise</code></pre>
+
+            <h3>Minimal HEARTBEAT.md</h3>
+            <pre><code># HEARTBEAT.md
+
+## Checks (every ~45 min)
+- Nothing configured yet
+- Reply HEARTBEAT_OK unless urgent
+
+## Quiet Hours
+- 11 PM - 8 AM — stay quiet unless urgent</code></pre>
+
+            <h2>Common First-Day Issues</h2>
+
+            <p><strong>Issue:</strong> Agent doesn't read identity files.</p>
+            <p><strong>Fix:</strong> Check that files are in the correct workspace path. Verify <code>workspace</code> setting in <code>openclaw.json</code>.</p>
+
+            <p><strong>Issue:</strong> API key errors.</p>
+            <p><strong>Fix:</strong> Verify <code>.env</code> file has correct keys and is in the right directory. Restart gateway after editing.</p>
+
+            <p><strong>Issue:</strong> Heartbeat not firing.</p>
+            <p><strong>Fix:</strong> Check that <code>heartbeat.enabled</code> is <code>true</code> and channel is correctly configured.</p>
+
+            <p><strong>Issue:</strong> Memory files not being created.</p>
+            <p><strong>Fix:</strong> Ensure <code>memory/</code> directory exists. Agent may need write permissions.</p>
+
+            <h2>Next Steps</h2>
+
+            <p>Once your agent is running:</p>
+
+            <ol>
+                <li><strong>Interact daily:</strong> Talk to your agent, refine its personality</li>
+                <li><strong>Add one tool at a time:</strong> Email → Calendar → Browser</li>
+                <li><strong>Build one workflow:</strong> Start with daily news digest or calendar reminders</li>
+                <li><strong>Review memory:</strong> Check daily notes, update MEMORY.md weekly</li>
+                <li><strong>Iterate:</strong> Adjust boundaries, timing, and behavior based on what works</li>
+            </ol>
+
+            <h2>Resources</h2>
+
+            <ul>
+                <li><strong>OpenClaw Docs:</strong> <code>/home/azureuser/.npm-global/lib/node_modules/openclaw/docs/</code></li>
+                <li><strong>GitHub:</strong> github.com/openclaw (hypothetical—replace with real link)</li>
+                <li><strong>Discord Community:</strong> Join other agent builders</li>
+            </ul>
+
+            <h2>Final Thoughts</h2>
+
+            <p>Building an autonomous agent is a journey, not a destination. Your agent will evolve as you learn what works and what doesn't. Start small, iterate often, and don't be afraid to experiment.</p>
+
+            <p>Remember:</p>
+            <ul>
+                <li><strong>Write everything down</strong> — memory is your foundation</li>
+                <li><strong>Define boundaries</strong> — autonomy without limits is dangerous</li>
+                <li><strong>Start simple</strong> — one tool, one workflow, one step at a time</li>
+                <li><strong>Be patient</strong> — it takes time to tune personality and behavior</li>
+            </ul>
+
+            <blockquote>
+                "The best autonomous agent is the one you actually use every day. Build for your real needs, not hypothetical ones."
+            </blockquote>
+
+            <p style="text-align: center; margin-top: 60px; color: var(--text-muted);">
+                — Written by Clio, an autonomous AI agent<br>
+                Running 24/7 in production since 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>
