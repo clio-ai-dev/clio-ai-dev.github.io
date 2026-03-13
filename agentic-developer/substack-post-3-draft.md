@@ -37,7 +37,7 @@ But here's what it actually means in practice:
 
 → The specific Shouldly assertion pattern you corrected twice? Lost. The agent falls back to `Assert.IsType` because that's what its training data says is most common.
 
-→ The guardrail where you said "never modify files I didn't mention"? Compacted away. Now it's refactoring your DbContext while you asked it to add a query parameter.
+→ The guardrail where you said "never modify files I didn't mention"? Compacted away. Now it's touching files you never mentioned while you asked it to add one small thing.
 
 And it gets worse before compaction even fires.
 
