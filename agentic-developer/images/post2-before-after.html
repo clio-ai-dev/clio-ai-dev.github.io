@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { margin: 0; padding: 40px; background: #f8f9fa; font-family: 'Inter', -apple-system, sans-serif; }
+.container { display: flex; gap: 24px; width: 1040px; }
+.panel { flex: 1; border-radius: 12px; padding: 28px; }
+.panel-bad { background: #fef2f2; border: 2px solid #fca5a5; }
+.panel-good { background: #f0fdf4; border: 2px solid #86efac; }
+.panel-title { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.panel-bad .panel-title { color: #dc2626; }
+.panel-good .panel-title { color: #16a34a; }
+pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; overflow: hidden; font-family: 'JetBrains Mono', 'Fira Code', monospace; margin: 0 0 12px 0; }
+.keyword { color: #569cd6; }
+.type { color: #4ec9b0; }
+.string { color: #ce9178; }
+.method { color: #dcdcaa; }
+.comment { color: #6a9955; }
+.attr { color: #c586c0; }
+.result-bar { padding: 10px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.result-fail { background: #991b1b; color: #fecaca; }
+.result-pass { background: #166534; color: #bbf7d0; }
+</style></head><body>
+<div class="container">
+<div class="panel panel-bad">
+<div class="panel-title">❌ Without context file</div>
+<pre><code>[<span class="attr">Fact</span>]
+<span class="keyword">public async</span> Task <span class="method">GetUserOrders_ReturnsNotFound_WhenUserDoesNotExist</span>()
+{
+    <span class="comment">// ...setup...</span>
+
+    <span class="keyword">var</span> result = <span class="keyword">await</span> OrdersEndpoints.<span class="method">GetUserOrders</span>(userId: 99, db);
+
+    Assert.<span class="method">IsType</span>&lt;<span class="type">NotFound</span>&gt;(result);
+}</code></pre>
+<div class="result-bar result-fail">Build failed with 2 error(s)</div>
+</div>
+<div class="panel panel-good">
+<div class="panel-title">✅ With context file</div>
+<pre><code>[<span class="attr">Fact</span>]
+<span class="keyword">public async</span> Task <span class="method">GetUserOrders_UserDoesNotExist_ReturnsNotFound</span>()
+{
+    <span class="comment">// ...setup...</span>
+
+    <span class="keyword">var</span> result = <span class="keyword">await</span> OrdersEndpoints.<span class="method">GetUserOrders</span>(userId: 99, db);
+
+    result.<span class="method">ShouldBeOfType</span>&lt;<span class="type">NotFound</span>&gt;();
+}</code></pre>
+<div class="result-bar result-pass">Build succeeded in 1.4s</div>
+</div>
+</div>
+</body></html>

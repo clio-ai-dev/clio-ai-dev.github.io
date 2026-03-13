@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { margin: 0; padding: 0; background: #f0f0f5; width: 1200px; height: 630px; overflow: hidden; position: relative; font-family: 'Inter', -apple-system, sans-serif; }
+.card {
+  position: absolute;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.card img { width: 100%; height: 100%; object-fit: cover; }
+/* Overlapping cards at angles like ByteByteGo */
+.card-1 { width: 380px; height: 280px; top: 20px; left: -20px; transform: rotate(-4deg); z-index: 1; }
+.card-2 { width: 350px; height: 260px; top: 40px; left: 300px; transform: rotate(2deg); z-index: 3; }
+.card-3 { width: 360px; height: 270px; top: 10px; right: -10px; transform: rotate(-2deg); z-index: 2; }
+.card-4 { width: 370px; height: 270px; bottom: 10px; left: 40px; transform: rotate(3deg); z-index: 4; }
+.card-5 { width: 340px; height: 250px; bottom: 20px; left: 380px; transform: rotate(-3deg); z-index: 5; }
+.card-6 { width: 360px; height: 260px; bottom: 30px; right: -10px; transform: rotate(1deg); z-index: 2; }
+</style></head><body>
+<div class="card card-1"><img src="img-01-01-v2.jpg"></div>
+<div class="card card-2"><img src="vg-10.jpg"></div>
+<div class="card card-3"><img src="img-03-01-v2.jpg"></div>
+<div class="card card-4"><img src="vg-19.jpg"></div>
+<div class="card card-5"><img src="vg-14.jpg"></div>
+<div class="card card-6"><img src="vg-24.jpg"></div>
+</body></html>

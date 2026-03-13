@@ -127,29 +127,35 @@ Write a handoff note for the next session. Include:
 Save it to HANDOFF.md in the project root.
 ```
 
-Here's what a real one looks like from a session I ran last week on an Aspire project:
+Here's a real one from a session where I analyzed a microservices codebase:
 
 ```markdown
-# Session Handoff — March 7, 2026
+# Session Handoff — March 12, 2026
 
-## What we built
-- Added DELETE /orders/{id}/cancel endpoint in OrderEndpoints.cs
-- Integration test in OrderEndpointsTests.cs (passes)
-- Added CancellationReason enum to Domain/Enums/
+## What we did
+- Full codebase analysis (no code changed)
+- Added keys/ directory to .gitignore
+- Wrote README.md from scratch — architecture, per-service breakdown, purchase saga flow
 
-## Decisions
-- Cancel = soft delete (sets Status to Cancelled, keeps record)
-- Only Pending orders can be cancelled (returns 409 for others)
-- No email notification on cancel yet (deferred to next session)
+## Decisions found
+- Database-per-service (MongoDB) — each service owns its data
+- Event-driven via RabbitMQ + MassTransit — async by default
+- Saga orchestration in Trading — distributed tx without 2PC
 
-## Left to do
-- Add cancel reason to the audit log
-- Update the Swagger docs with 409 response example
-- Consider: should admins be able to cancel Shipped orders?
+## Bugs discovered
+- Guid.Parse without null guard in PurchaseController — crashes if sub claim missing
+- Quantity can go negative in SubtractItemsConsumer — no floor check
+- Deleted users persist forever in Trading's replica
 
-## Patterns established
-- All new endpoints follow: validate → authorize → execute → respond
-- Integration tests use ResetDatabase() in constructor, not per-test
+## What to build next
+- [ ] Tests — zero test projects. Start with ItemsController unit tests
+- [ ] Health checks — AddMongoDb + AddRabbitMQ in all four services
+- [ ] Dockerfiles — one per service
+
+## Conventions
+- Entities implement IEntity, repos are IRepository<T> (singleton)
+- AsDto() extension methods for all mapping
+- All monetary values use decimal, all timestamps DateTimeOffset.UtcNow
 ```
 
 Then in your next session: `Read HANDOFF.md before doing anything.`
