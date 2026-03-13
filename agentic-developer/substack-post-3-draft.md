@@ -192,7 +192,7 @@ This eats 8K+ tokens on load. You just gave yourself a smaller context window be
 # CLAUDE.md
 
 ## Stack
-- .NET 10, Aspire 9.5, Minimal APIs
+- .NET 10, Aspire 13.1, Minimal APIs
 - xUnit + Shouldly for assertions
 - EF Core with PostgreSQL
 - No AutoMapper — manual mapping only
