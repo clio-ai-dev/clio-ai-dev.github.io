@@ -56,6 +56,8 @@ That last part is what makes this dangerous. A build error is obvious. A wrong v
 
 Before I give you the fix, let me describe what The Amnesia Point looks like in practice. If three or more of these sound familiar, you've been living with this problem:
 
+![The 5 Symptoms of The Amnesia Point](images/amnesia-symptoms.png)
+
 **1. The Convention Reset.** Your project uses Shouldly, `MethodName_Scenario_ExpectedResult`, and FluentAssertions for HTTP tests. At minute 40, the agent starts writing plain xUnit assertions and `ReturnsX_WhenY` test names. You correct it. It apologizes. Two prompts later, it does it again.
 
 **2. The Ghost Refactor.** You asked Claude to add a DELETE endpoint. Instead, it also restructured three files you didn't mention, extracted a base class you didn't ask for, added a NuGet package you explicitly rejected twenty minutes ago, and moved a helper method to a new "shared" project. The guardrails you set early in the session got compacted away. Claude isn't being malicious. It's being *helpful* without the memory of what "helpful" means in your codebase.
