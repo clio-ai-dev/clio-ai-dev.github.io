@@ -256,14 +256,20 @@ One session rotation. One CLAUDE.md. One handoff note. That's all it takes.
 
 The developers shipping clean code with AI agents aren't smarter. They're not using a secret model or a magic prompt. They just learned to work *with* the context window instead of pretending it's infinite.
 
+---
+
+✦ Run `/context` before you trust a long session. If you're above 50%, rotate.
+
+✦ Write a HANDOFF.md before starting fresh. Your next session can't remember — but it can read.
+
+✦ Keep your CLAUDE.md under 200 words. It's a contract, not a README.
+
 Your agent isn't getting dumber. It's getting amnesia. Now you know how to treat it.
 
----
-
-I put together a free visual guide with 32 illustrated concepts on agentic development — including context management, session architecture, and the CLAUDE.md patterns that actually work. Get it here 👇
-
-[link to visual guide]
-
----
+— Julio
 
 *What's the worst "amnesia moment" you've had in a coding session? Hit reply — I read every one.*
+
+---
+
+If this helped you, forward it to a developer who's been running 90-minute AI sessions and wondering why the output keeps getting worse. That's how this newsletter grows — one forwarded email at a time.
