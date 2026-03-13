@@ -199,8 +199,7 @@ This eats 8K+ tokens on load. You just gave yourself a smaller context window be
 
 ## Test Conventions
 - Names: MethodName_Scenario_ExpectedResult
-- Integration tests use WebApplicationFactory
-- ResetDatabase() in test class constructor
+- Integration tests use WebApplicationFactory + Testcontainers
 - Shouldly for all assertions (never plain xUnit Assert)
 
 ## Code Conventions
