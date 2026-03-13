@@ -234,11 +234,11 @@ The key insight: **CLAUDE.md isn't documentation. It's a contract.** Write it li
 
 I want to be honest about the limits.
 
-Session rotation won't help if your CLAUDE.md is bad. A fresh session with vague instructions will produce the same mediocre output every time — it'll just do it consistently.
+→ **Bad CLAUDE.md = bad output, consistently.** Session rotation won't save you if your instructions are vague. A fresh session with "use the project's conventions" will produce the same mediocre output every time — it'll just do it reliably.
 
-It also won't help with genuinely hard problems that require deep context. If you're debugging a race condition that spans four services, you might need a long session. In that case, use `/context` to monitor, and be aware that the quality is degrading. Check the agent's work more carefully after the 50% mark. Don't trust it the same way you did at the start.
+→ **Deep debugging still needs long sessions.** If you're chasing a race condition across four services, you might need the full context window. Use `/context` to monitor, check the agent's work more carefully after 50%, and don't trust it the same way you did at the start.
 
-And this is a Claude Code article, but the core problem — attention degradation in long contexts — is model-level. Cursor, Copilot, Windsurf, Aider — they all share this. If it runs on a transformer with a context window, it has an Amnesia Point. The tools are different. The physics is the same.
+→ **This isn't just Claude Code.** The core problem — attention degradation in long contexts — is model-level. Cursor, Copilot, Windsurf, Aider — they all have an Amnesia Point. The tools are different. The physics is the same.
 
 ## The 30-minute challenge
 
