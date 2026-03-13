@@ -1,6 +1,6 @@
 # Post #3 Draft: The Agentic Developer
 
-**Subject line:** Amnesia.
+**Subject line:** Your agent has amnesia.
 **Subtitle:** Your AI coding agent forgets what it's doing after 20 minutes. Here's why, and what to do about it.
 
 ---
