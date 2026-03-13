@@ -58,15 +58,15 @@ Before I give you the fix, let me describe what The Amnesia Point looks like in 
 
 ![The 5 Symptoms of The Amnesia Point](images/amnesia-symptoms.png)
 
-**1. The Convention Reset.** Your project uses Shouldly, `MethodName_Scenario_ExpectedResult`, and FluentAssertions for HTTP tests. At minute 40, the agent starts writing plain xUnit assertions and `ReturnsX_WhenY` test names. You correct it. It apologizes. Two prompts later, it does it again.
+**1. The Convention Reset.** Your project uses Shouldly and `MethodName_Scenario_ExpectedResult`. At minute 40, the agent switches to plain xUnit and `ReturnsX_WhenY`. You correct it. It apologizes. Two prompts later, it does it again.
 
-**2. The Ghost Refactor.** You asked Claude to add a DELETE endpoint. Instead, it also restructured three files you didn't mention, extracted a base class you didn't ask for, added a NuGet package you explicitly rejected twenty minutes ago, and moved a helper method to a new "shared" project. The guardrails you set early in the session got compacted away. Claude isn't being malicious. It's being *helpful* without the memory of what "helpful" means in your codebase.
+**2. The Ghost Refactor.** You asked for a DELETE endpoint. You got that, plus three restructured files, an unwanted base class, and a NuGet package you rejected twenty minutes ago. The guardrails got compacted. Claude isn't being malicious. It just forgot what "helpful" means in your codebase.
 
-**3. The Confident Loop.** Claude fixes a test. You run it. It fails. Claude "fixes" it again, with the exact same approach. Maybe it renames a variable. Maybe it adds a comment. But the structural problem is identical. This loop can go 4-5 rounds before you realize the agent lost the context of *why* the test was failing in the first place. It's pattern-matching on the error message without remembering the three things it already tried.
+**3. The Confident Loop.** Claude fixes a test. You run it. It fails. Claude "fixes" it again with the exact same approach. Maybe it renames a variable. This loop runs 4-5 rounds. It's pattern-matching on the error without remembering what it already tried.
 
-**4. The Duplicate Import.** You're working in an Aspire AppHost. Claude adds a project reference that already exists. Or it adds `using Microsoft.Extensions.DependencyInjection;` to a file that already has it. Small things. Easy to catch. But they're a canary. If the agent can't remember what's already in a file it read 10 minutes ago, it definitely can't remember the architectural decision you made verbally 30 minutes ago.
+**4. The Duplicate Import.** Claude adds a project reference that already exists. Or a `using` statement that's already there. Small stuff. But it's a canary. If it can't remember a file it read 10 minutes ago, it definitely can't remember the architectural decision from 30 minutes ago.
 
-**5. The Personality Shift.** This one is subtle. Early in the session, Claude gives you concise, targeted responses. It respects your style. It asks clarifying questions. By minute 50, the responses get longer. More boilerplate. More "certainly!" and "I'd be happy to help with that!" The agent isn't just forgetting your code. It's forgetting the working relationship you established. It's reverting to its training data personality.
+**5. The Personality Shift.** Early in the session, Claude is concise and targeted. By minute 50, responses get longer. More boilerplate. More "certainly!" It's not forgetting your code. It's forgetting *you*.
 
 If you've ever thought "Claude got dumber during the session"... no. It got *amnesia*.
 
