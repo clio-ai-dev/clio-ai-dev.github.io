@@ -1,7 +1,7 @@
-# Post #3 Draft — The Agentic Developer
+# Post #3 Draft: The Agentic Developer
 
 **Subject line:** Amnesia.
-**Subtitle:** Your AI coding agent forgets what it's doing after 20 minutes. Here's why — and what to do about it.
+**Subtitle:** Your AI coding agent forgets what it's doing after 20 minutes. Here's why, and what to do about it.
 
 ---
 
@@ -13,7 +13,7 @@ And it rewrites the file from scratch. Different naming conventions. Different a
 
 You didn't change anything. You didn't confuse it. **Your session just forgot itself.**
 
-This is the thing nobody warns you about with AI coding agents. The context window — that 200K token buffer that sounds enormous — has a cliff. And once you fall off it, the agent doesn't throw an error. It doesn't warn you. It just starts confidently producing garbage that *looks* like competent code.
+This is the thing nobody warns you about with AI coding agents. The context window (that 200K token buffer that sounds enormous) has a cliff. And once you fall off it, the agent doesn't throw an error. It doesn't warn you. It just starts confidently producing garbage that *looks* like competent code.
 
 I call it **The Amnesia Point.**
 
@@ -21,11 +21,11 @@ And if you've been using Claude Code, Copilot, or Cursor for more than a few wee
 
 ## What's actually happening inside the window
 
-Every time you interact with Claude Code, the conversation grows. Your prompts, its responses, file reads, build output, test results, error logs — all of it stacks into a single context window.
+Every time you interact with Claude Code, the conversation grows. Your prompts, its responses, file reads, build output, test results, error logs. All of it stacks into a single context window.
 
-Think of it like a whiteboard. Every exchange writes something on that whiteboard. The board is big — 200,000 tokens big. But it's not infinite.
+Think of it like a whiteboard. Every exchange writes something on that whiteboard. The board is big. 200,000 tokens big. But it's not infinite.
 
-![The Amnesia Point — what your AI remembers at minute 5 vs minute 45](images/amnesia-whiteboard.png)
+![The Amnesia Point: what your AI remembers at minute 5 vs minute 45](images/amnesia-whiteboard.png)
 
 At around 65-70% capacity, Claude Code does something called **auto-compaction**. It summarizes the conversation to free up space. Sounds reasonable. Like erasing the less important stuff on the whiteboard to make room for new work.
 
@@ -41,7 +41,7 @@ But here's what it actually means in practice:
 
 And it gets worse before compaction even fires.
 
-Stanford researchers found that language model performance degrades **15-47%** as context fills up — even with the full conversation intact. The model literally pays less attention to information in the middle of a long conversation. They called it "Lost in the Middle." The information is technically *there*. The model just stops using it effectively.
+Stanford researchers found that language model performance degrades **15-47%** as context fills up, even with the full conversation intact. The model literally pays less attention to information in the middle of a long conversation. They called it "Lost in the Middle." The information is technically *there*. The model just stops using it effectively.
 
 So you have two problems:
 
@@ -62,13 +62,13 @@ Before I give you the fix, let me describe what The Amnesia Point looks like in 
 
 **2. The Ghost Refactor.** You asked Claude to add a DELETE endpoint. Instead, it also restructured three files you didn't mention, extracted a base class you didn't ask for, added a NuGet package you explicitly rejected twenty minutes ago, and moved a helper method to a new "shared" project. The guardrails you set early in the session got compacted away. Claude isn't being malicious. It's being *helpful* without the memory of what "helpful" means in your codebase.
 
-**3. The Confident Loop.** Claude fixes a test. You run it. It fails. Claude "fixes" it again — with the exact same approach. Maybe it renames a variable. Maybe it adds a comment. But the structural problem is identical. This loop can go 4-5 rounds before you realize the agent lost the context of *why* the test was failing in the first place. It's pattern-matching on the error message without remembering the three things it already tried.
+**3. The Confident Loop.** Claude fixes a test. You run it. It fails. Claude "fixes" it again, with the exact same approach. Maybe it renames a variable. Maybe it adds a comment. But the structural problem is identical. This loop can go 4-5 rounds before you realize the agent lost the context of *why* the test was failing in the first place. It's pattern-matching on the error message without remembering the three things it already tried.
 
-**4. The Duplicate Import.** You're working in an Aspire AppHost. Claude adds a project reference that already exists. Or it adds `using Microsoft.Extensions.DependencyInjection;` to a file that already has it. Small things. Easy to catch. But they're a canary — if the agent can't remember what's already in a file it read 10 minutes ago, it definitely can't remember the architectural decision you made verbally 30 minutes ago.
+**4. The Duplicate Import.** You're working in an Aspire AppHost. Claude adds a project reference that already exists. Or it adds `using Microsoft.Extensions.DependencyInjection;` to a file that already has it. Small things. Easy to catch. But they're a canary. If the agent can't remember what's already in a file it read 10 minutes ago, it definitely can't remember the architectural decision you made verbally 30 minutes ago.
 
-**5. The Personality Shift.** This one is subtle. Early in the session, Claude gives you concise, targeted responses. It respects your style. It asks clarifying questions. By minute 50, the responses get longer. More boilerplate. More "certainly!" and "I'd be happy to help with that!" The agent isn't just forgetting your code — it's forgetting the working relationship you established. It's reverting to its training data personality.
+**5. The Personality Shift.** This one is subtle. Early in the session, Claude gives you concise, targeted responses. It respects your style. It asks clarifying questions. By minute 50, the responses get longer. More boilerplate. More "certainly!" and "I'd be happy to help with that!" The agent isn't just forgetting your code. It's forgetting the working relationship you established. It's reverting to its training data personality.
 
-If you've ever thought "Claude got dumber during the session" — no. It got *amnesia*.
+If you've ever thought "Claude got dumber during the session"... no. It got *amnesia*.
 
 ## The context audit (do this right now)
 
@@ -82,13 +82,13 @@ Open Claude Code. Whatever session you're currently in. Type this:
 
 That's it. One command.
 
-Since v2.1.74, `/context` doesn't just show you a progress bar. It gives you **actionable diagnostics**. It tells you what's eating your context window — bloated CLAUDE.md, bash history accumulation, large file reads that are sitting in memory. And it gives you specific suggestions for each issue.
+Since v2.1.74, `/context` doesn't just show you a progress bar. It gives you **actionable diagnostics**. It tells you what's eating your context window. Bloated CLAUDE.md, bash history accumulation, large file reads that are sitting in memory. And it gives you specific suggestions for each issue.
 
 Here's what mine looks like after a normal working session:
 
-![Real /context output at 71% — Messages eating 64.7% of the window](images/context-screenshot.png)
+![Real /context output at 71%. Messages eating 64.7% of the window](images/context-screenshot.png)
 
-71%. Messages alone eating 64.7% of the window. Only 11.5% free space before the autocompact buffer kicks in. And I wasn't doing anything unusual — just reading files, asking questions, reviewing output. A normal session.
+71%. Messages alone eating 64.7% of the window. Only 11.5% free space before the autocompact buffer kicks in. And I wasn't doing anything unusual. Just reading files, asking questions, reviewing output. A normal session.
 
 If you're above 50%, you've probably already hit The Amnesia Point without knowing it. The quality degradation starts well before the auto-compaction threshold.
 
@@ -130,27 +130,27 @@ Save it to HANDOFF.md in the project root.
 Here's a real one from a session where I analyzed a microservices codebase:
 
 ```markdown
-# Session Handoff — March 12, 2026
+# Session Handoff, March 12, 2026
 
 ## What we did
 - Full codebase analysis (no code changed)
 - Added keys/ directory to .gitignore
-- Wrote README.md from scratch — architecture, per-service breakdown, purchase saga flow
+- Wrote README.md from scratch (architecture, per-service breakdown, purchase saga flow)
 
 ## Decisions found
-- Database-per-service (MongoDB) — each service owns its data
-- Event-driven via RabbitMQ + MassTransit — async by default
-- Saga orchestration in Trading — distributed tx without 2PC
+- Database-per-service (MongoDB). Each service owns its data
+- Event-driven via RabbitMQ + MassTransit. Async by default
+- Saga orchestration in Trading. Distributed tx without 2PC
 
 ## Bugs discovered
-- Guid.Parse without null guard in PurchaseController — crashes if sub claim missing
-- Quantity can go negative in SubtractItemsConsumer — no floor check
+- Guid.Parse without null guard in PurchaseController (crashes if sub claim missing)
+- Quantity can go negative in SubtractItemsConsumer (no floor check)
 - Deleted users persist forever in Trading's replica
 
 ## What to build next
-- [ ] Tests — zero test projects. Start with ItemsController unit tests
-- [ ] Health checks — AddMongoDb + AddRabbitMQ in all four services
-- [ ] Dockerfiles — one per service
+- [ ] Tests. Zero test projects. Start with ItemsController unit tests
+- [ ] Health checks. AddMongoDb + AddRabbitMQ in all four services
+- [ ] Dockerfiles. One per service
 
 ## Conventions
 - Entities implement IEntity, repos are IRepository<T> (singleton)
@@ -186,7 +186,7 @@ team contact info, and a paragraph about the company mission]
 
 This eats 8K+ tokens on load. You just gave yourself a smaller context window before you even started working. And most of that information is irrelevant to the task at hand. You're accelerating toward The Amnesia Point before your first prompt.
 
-**What actually works — the 200-word CLAUDE.md:**
+**What actually works, the 200-word CLAUDE.md:**
 
 ```markdown
 # CLAUDE.md
@@ -218,15 +218,15 @@ This eats 8K+ tokens on load. You just gave yourself a smaller context window be
 - NEVER modify files I didn't mention in my prompt
 - NEVER add NuGet packages without asking
 - NEVER restructure existing code as part of a new feature
-- NEVER hardcode service URLs — read from config
+- NEVER hardcode service URLs. Read from config
 
 ## Verification (run after every change)
-- `dotnet build` in the affected service — must succeed with zero warnings
-- `dotnet test` in the matching test project — all tests must pass
+- `dotnet build` in the affected service. Must succeed with zero warnings
+- `dotnet test` in the matching test project. All tests must pass
 - If either fails, fix it before reporting done
 ```
 
-That's ~200 tokens on load. It contains every decision the agent needs to respect your codebase — in a fresh session, after compaction, at minute 1 or minute 30. And because it's short, it actually gets *read and applied* instead of getting lost in the middle of a bloated instruction set.
+That's ~200 tokens on load. It contains every decision the agent needs to respect your codebase, in a fresh session, after compaction, at minute 1 or minute 30. And because it's short, it actually gets *read and applied* instead of getting lost in the middle of a bloated instruction set.
 
 The key insight: **CLAUDE.md isn't documentation. It's a contract.** Write it like terms of service for your codebase, not like a README.
 
@@ -234,17 +234,17 @@ The key insight: **CLAUDE.md isn't documentation. It's a contract.** Write it li
 
 I want to be honest about the limits.
 
-→ **Bad CLAUDE.md = bad output, consistently.** Session rotation won't save you if your instructions are vague. A fresh session with "use the project's conventions" will produce the same mediocre output every time — it'll just do it reliably.
+→ **Bad CLAUDE.md = bad output, consistently.** Session rotation won't save you if your instructions are vague. A fresh session with "use the project's conventions" will produce the same mediocre output every time. It'll just do it reliably.
 
 → **Deep debugging still needs long sessions.** If you're chasing a race condition across four services, you might need the full context window. Use `/context` to monitor, check the agent's work more carefully after 50%, and don't trust it the same way you did at the start.
 
-→ **This isn't just Claude Code.** The core problem — attention degradation in long contexts — is model-level. Cursor, Copilot, Windsurf, Aider — they all have an Amnesia Point. The tools are different. The physics is the same.
+→ **This isn't just Claude Code.** The core problem (attention degradation in long contexts) is model-level. Cursor, Copilot, Windsurf, Aider. They all have an Amnesia Point. The tools are different. The physics is the same.
 
 ## The 30-minute challenge
 
 Try this today:
 
-**Minutes 1-5:** Open your current Claude Code project. Run `/context`. Screenshot what you see. If you're above 50% and still working — congratulations, you just caught The Amnesia Point in action.
+**Minutes 1-5:** Open your current Claude Code project. Run `/context`. Screenshot what you see. If you're above 50% and still working, congratulations. You just caught The Amnesia Point in action.
 
 **Minutes 5-15:** Write a CLAUDE.md under 200 words. Use the template above. Focus on conventions, guardrails, and verification commands. Nothing else. If you already have one, cut it down. Shorter is better.
 
@@ -262,16 +262,16 @@ The developers shipping clean code with AI agents aren't smarter. They're not us
 
 ✦ Run `/context` before you trust a long session. If you're above 50%, rotate.
 
-✦ Write a HANDOFF.md before starting fresh. Your next session can't remember — but it can read.
+✦ Write a HANDOFF.md before starting fresh. Your next session can't remember, but it can read.
 
 ✦ Keep your CLAUDE.md under 200 words. It's a contract, not a README.
 
 Your agent isn't getting dumber. It's getting amnesia. Now you know how to treat it.
 
-— Julio
+Julio
 
-*What's the worst "amnesia moment" you've had in a coding session? Hit reply — I read every one.*
+*What's the worst "amnesia moment" you've had in a coding session? Hit reply. I read every one.*
 
 ---
 
-If this helped you, forward it to a developer who's been running 90-minute AI sessions and wondering why the output keeps getting worse. That's how this newsletter grows — one forwarded email at a time.
+If this helped you, forward it to a developer who's been running 90-minute AI sessions and wondering why the output keeps getting worse. That's how this newsletter grows, one forwarded email at a time.
