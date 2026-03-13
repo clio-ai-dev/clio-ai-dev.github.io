@@ -25,6 +25,8 @@ Every time you interact with Claude Code, the conversation grows. Your prompts, 
 
 Think of it like a whiteboard. Every exchange writes something on that whiteboard. The board is big — 200,000 tokens big. But it's not infinite.
 
+![The Amnesia Point — what your AI remembers at minute 5 vs minute 45](images/amnesia-whiteboard.png)
+
 At around 65-70% capacity, Claude Code does something called **auto-compaction**. It summarizes the conversation to free up space. Sounds reasonable. Like erasing the less important stuff on the whiteboard to make room for new work.
 
 But here's what it actually means in practice:
