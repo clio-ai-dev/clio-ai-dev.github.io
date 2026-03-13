@@ -258,7 +258,7 @@ The developers shipping clean code with AI agents aren't smarter. They're not us
 
 ---
 
-## Now, how do you keep your AI agent from forgetting everything mid-session?
+## So, how to keep your AI agent from forgetting everything mid-session?
 
 ✦ Run `/context` before you trust a long session. If you're above 50%, rotate.
 
