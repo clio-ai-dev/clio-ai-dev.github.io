@@ -242,7 +242,7 @@ I want to be honest about the limits.
 
 ## The 30-minute challenge
 
-Here's what I want you to do today:
+Try this today:
 
 **Minutes 1-5:** Open your current Claude Code project. Run `/context`. Screenshot what you see. If you're above 50% and still working — congratulations, you just caught The Amnesia Point in action.
 
