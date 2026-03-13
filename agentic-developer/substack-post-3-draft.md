@@ -192,34 +192,41 @@ This eats 8K+ tokens on load. You just gave yourself a smaller context window be
 # CLAUDE.md
 
 ## Stack
-- .NET 10, Aspire 13.1, Minimal APIs
-- xUnit + Shouldly for assertions
-- EF Core with PostgreSQL
-- No AutoMapper — manual mapping only
+- .NET 10 microservices (no Aspire, no orchestrator)
+- MongoDB per service, RabbitMQ via MassTransit
+- Duende IdentityServer 7 (Play.Identity)
+- React frontend on :3000
 
-## Test Conventions
-- Names: MethodName_Scenario_ExpectedResult
-- Integration tests use WebApplicationFactory + Testcontainers
-- Shouldly for all assertions (never plain xUnit Assert)
+## Build & Run
+- Infrastructure first: `cd Play.Infra && docker compose up -d`
+- Each service: `cd Play.*/src/Play.*.Service && dotnet run`
+- Start Play.Identity first (JWT authority for all others)
 
-## Code Conventions
-- One endpoint per static method in *Endpoints.cs
-- All endpoints: validate → authorize → execute → respond
-- AppHost references use AddProject, not AddExecutable
+## Architecture Rules
+- Services communicate ONLY via MassTransit (pub/sub + point-to-point)
+- Play.Common is a shared NuGet package, NOT a project reference
+- Local entity replicas keep data fresh via events (don't query across services)
+- Idempotent consumers track MessageIds in a HashSet on the entity
+
+## Conventions
+- Settings: `Configuration.GetSection(nameof(XxxSettings)).Get<XxxSettings>()`
+- MassTransit endpoints: kebab-case `{ServiceName}-{MessageType}`
+- BSON serializers: GuidSerializer(String), DateTimeOffsetSerializer(String)
+- Contracts live in separate *.Contracts NuGet packages
 
 ## Guardrails
 - NEVER modify files I didn't mention in my prompt
-- NEVER add NuGet packages without asking first
+- NEVER add NuGet packages without asking
 - NEVER restructure existing code as part of a new feature
-- NEVER skip build/test verification
+- NEVER hardcode service URLs — read from config
 
 ## Verification (run after every change)
-- `dotnet build` — must succeed
-- `dotnet test` — must pass
-- If either fails, fix before reporting done
+- `dotnet build` in the affected service — must succeed with zero warnings
+- `dotnet test` in the matching test project — all tests must pass
+- If either fails, fix it before reporting done
 ```
 
-That's ~160 tokens on load. It contains every decision the agent needs to respect your codebase — in a fresh session, after compaction, at minute 1 or minute 30. And because it's short, it actually gets *read and applied* instead of getting lost in the middle of a bloated instruction set.
+That's ~200 tokens on load. It contains every decision the agent needs to respect your codebase — in a fresh session, after compaction, at minute 1 or minute 30. And because it's short, it actually gets *read and applied* instead of getting lost in the middle of a bloated instruction set.
 
 The key insight: **CLAUDE.md isn't documentation. It's a contract.** Write it like terms of service for your codebase, not like a README.
 
