@@ -258,6 +258,8 @@ The developers shipping clean code with AI agents aren't smarter. They're not us
 
 ---
 
+## TL;DR
+
 ✦ Run `/context` before you trust a long session. If you're above 50%, rotate.
 
 ✦ Write a HANDOFF.md before starting fresh. Your next session can't remember — but it can read.
