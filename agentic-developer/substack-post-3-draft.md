@@ -84,6 +84,12 @@ That's it. One command.
 
 Since v2.1.74, `/context` doesn't just show you a progress bar. It gives you **actionable diagnostics**. It tells you what's eating your context window — bloated CLAUDE.md, bash history accumulation, large file reads that are sitting in memory. And it gives you specific suggestions for each issue.
 
+Here's what mine looks like after a normal working session:
+
+![Real /context output at 71% — Messages eating 64.7% of the window](images/context-screenshot.png)
+
+71%. Messages alone eating 64.7% of the window. Only 11.5% free space before the autocompact buffer kicks in. And I wasn't doing anything unusual — just reading files, asking questions, reviewing output. A normal session.
+
 If you're above 50%, you've probably already hit The Amnesia Point without knowing it. The quality degradation starts well before the auto-compaction threshold.
 
 Remember that number. We'll come back to it.
