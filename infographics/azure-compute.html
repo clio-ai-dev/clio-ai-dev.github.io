@@ -1,597 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=1080">
-<title>Which Azure Compute Service Should You Use?</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    width: 1080px;
-    min-height: 1350px;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: linear-gradient(170deg, #f7f0e4 0%, #efe6d5 40%, #e8dcc8 100%);
-    padding: 22px 20px 20px;
-    color: #2a2a3a;
-    -webkit-font-smoothing: antialiased;
-  }
-  
-  /* ===== HEADER ===== */
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 14px;
-  }
-  
-  .header-icon {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, #0078D4, #004578);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 3px 12px rgba(0,70,140,0.3);
-    flex-shrink: 0;
-  }
-  
-  .header h1 {
-    font-size: 28px;
-    font-weight: 900;
-    color: #1a1a2e;
-    letter-spacing: -0.5px;
-    line-height: 1.15;
-  }
-  
-  .header .subtitle {
-    font-size: 11px;
-    color: #6a6a7a;
-    font-weight: 500;
-    margin-top: 3px;
-  }
-  
-  /* ===== TABLES ===== */
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
-  }
-  
-  /* Main comparison table */
-  .main-table { font-size: 10px; line-height: 1.35; }
-  
-  .main-table th {
-    padding: 8px 7px;
-    text-align: center;
-    font-size: 9.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    border-right: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-  }
-  
-  .main-table thead th { background: linear-gradient(180deg, #0078D4, #005a9e); }
-  .main-table thead th:first-child { background: linear-gradient(180deg, #004578, #003460); width: 82px; text-align: left; }
-  .main-table thead th:last-child { border-right: none; }
-  
-  /* Service icon row */
-  .main-table .icon-row td {
-    text-align: center;
-    font-size: 22px;
-    padding: 6px 4px 2px;
-    background: #fff;
-    border-bottom: 2px solid #0078D4;
-    border-right: 1px solid #e0d8cc;
-  }
-  .main-table .icon-row td:first-child { background: #f5efe5; border-bottom-color: #004578; }
-  .main-table .icon-row td:last-child { border-right: none; }
-  
-  .main-table td {
-    padding: 5px 6px;
-    border-bottom: 1px solid #e0d8cc;
-    border-right: 1px solid #e0d8cc;
-    vertical-align: top;
-    text-align: center;
-    color: #3a3a4a;
-  }
-  
-  .main-table td:first-child {
-    text-align: left;
-    font-weight: 700;
-    color: #004578;
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  
-  .main-table td:last-child { border-right: none; }
-  .main-table tr:last-child td { border-bottom: none; }
-  
-  /* Alternating row colors — warm pastels */
-  .main-table tbody tr:nth-child(odd) td { background: #fff; }
-  .main-table tbody tr:nth-child(odd) td:first-child { background: #f5efe5; }
-  .main-table tbody tr:nth-child(even) td { background: #faf6ee; }
-  .main-table tbody tr:nth-child(even) td:first-child { background: #f0e8da; }
-  
-  /* Color-code each service column header differently */
-  .col-vm { background: linear-gradient(180deg, #5B5EA6, #484B8A) !important; }
-  .col-app { background: linear-gradient(180deg, #2E86AB, #1F6F8B) !important; }
-  .col-func { background: linear-gradient(180deg, #E8871E, #C6720F) !important; }
-  .col-aci { background: linear-gradient(180deg, #4CAF50, #388E3C) !important; }
-  .col-aks { background: linear-gradient(180deg, #7B1FA2, #5C1580) !important; }
-  .col-aca { background: linear-gradient(180deg, #0078D4, #005A9E) !important; }
-  
-  /* ===== SECTION TITLES ===== */
-  .section-title {
-    font-size: 11px;
-    font-weight: 800;
-    color: #1a1a2e;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 6px;
-    padding: 4px 8px;
-    background: linear-gradient(90deg, rgba(0,120,212,0.12), transparent);
-    border-left: 3px solid #0078D4;
-    border-radius: 2px;
-  }
-  
-  /* ===== KEY STRENGTHS ===== */
-  .strengths {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-  
-  .strength-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 7px 9px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    border-left: 3px solid;
-  }
-  
-  .sc-vm { border-left-color: #5B5EA6; }
-  .sc-app { border-left-color: #2E86AB; }
-  .sc-func { border-left-color: #E8871E; }
-  .sc-aci { border-left-color: #4CAF50; }
-  .sc-aks { border-left-color: #7B1FA2; }
-  .sc-aca { border-left-color: #0078D4; }
-  
-  .sc-title {
-    font-size: 9px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-  
-  .sc-vm .sc-title { color: #5B5EA6; }
-  .sc-app .sc-title { color: #2E86AB; }
-  .sc-func .sc-title { color: #E8871E; }
-  .sc-aci .sc-title { color: #4CAF50; }
-  .sc-aks .sc-title { color: #7B1FA2; }
-  .sc-aca .sc-title { color: #0078D4; }
-  
-  .sc-desc {
-    font-size: 8.5px;
-    color: #506070;
-    line-height: 1.35;
-  }
-  
-  /* ===== FEATURES TABLE ===== */
-  .features-table { font-size: 9.5px; line-height: 1.3; }
-  
-  .features-table th {
-    padding: 6px 5px;
-    text-align: center;
-    font-size: 8.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    color: #fff;
-    border-right: 1px solid rgba(255,255,255,0.2);
-  }
-  
-  .features-table thead th { background: linear-gradient(180deg, #004578, #003460); }
-  .features-table thead th:first-child { text-align: left; width: 130px; }
-  .features-table thead th:last-child { border-right: none; }
-  
-  .features-table td {
-    padding: 4px 5px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 9px;
-    border-bottom: 1px solid #e0d8cc;
-    border-right: 1px solid #e0d8cc;
-  }
-  
-  .features-table td:first-child {
-    text-align: left;
-    font-weight: 600;
-    color: #004578;
-    font-size: 9px;
-  }
-  
-  .features-table td:last-child { border-right: none; }
-  .features-table tr:last-child td { border-bottom: none; }
-  .features-table tbody tr:nth-child(odd) td { background: #fff; }
-  .features-table tbody tr:nth-child(odd) td:first-child { background: #f5efe5; }
-  .features-table tbody tr:nth-child(even) td { background: #faf6ee; }
-  .features-table tbody tr:nth-child(even) td:first-child { background: #f0e8da; }
-  
-  .y { color: #0d7a3e; }
-  .n { color: #c42b2b; }
-  
-  /* ===== USE WHEN CARDS ===== */
-  .use-when {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-  
-  .use-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 7px 8px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    border-top: 3px solid;
-  }
-  
-  .uc-vm { border-top-color: #5B5EA6; }
-  .uc-app { border-top-color: #2E86AB; }
-  .uc-func { border-top-color: #E8871E; }
-  .uc-aci { border-top-color: #4CAF50; }
-  .uc-aks { border-top-color: #7B1FA2; }
-  .uc-aca { border-top-color: #0078D4; }
-  
-  .uc-title {
-    font-size: 8.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    margin-bottom: 3px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  .uc-vm .uc-title { color: #5B5EA6; }
-  .uc-app .uc-title { color: #2E86AB; }
-  .uc-func .uc-title { color: #E8871E; }
-  .uc-aci .uc-title { color: #4CAF50; }
-  .uc-aks .uc-title { color: #7B1FA2; }
-  .uc-aca .uc-title { color: #0078D4; }
-  
-  .uc-item {
-    font-size: 8.5px;
-    color: #3a3a4a;
-    line-height: 1.35;
-    margin-bottom: 1px;
-    padding-left: 9px;
-    position: relative;
-  }
-  
-  .uc-item::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #888;
-    font-weight: 700;
-  }
-  
-  /* ===== TIPS ===== */
-  .tips {
-    background: #fff;
-    border-radius: 10px;
-    padding: 8px 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    border-top: 3px solid #0078D4;
-    columns: 2;
-    column-gap: 20px;
-  }
-  
-  .tips-title {
-    column-span: all;
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #004578;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-  }
-  
-  .tip {
-    font-size: 8.5px;
-    color: #506070;
-    line-height: 1.35;
-    margin-bottom: 2px;
-    padding-left: 10px;
-    position: relative;
-    break-inside: avoid;
-  }
-  
-  .tip::before {
-    content: "✦";
-    position: absolute;
-    left: 0;
-    color: #0078D4;
-    font-size: 7px;
-    top: 1px;
-  }
-  
-  /* ===== BRANDING SPACE ===== */
-  .branding {
-    height: 40px;
-  }
-</style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Azure Compute Infographic</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --bg-warm: #fdfbf7;
+ --bg-section: #f4f1ee;
+ --accent-orange: #d97757;
+ --accent-charcoal: #4a433f;
+ --accent-tan: #e1ddd7;
+ --text-main: #33312e;
+ --text-light: #6b6661;
+ --white: #ffffff;
+ }
+
+ * {
+ box-sizing: border-box;
+ -webkit-font-smoothing: antialiased;
+ }
+
+ body {
+ margin: 0;
+ padding: 0;
+ background-color: #e5e5e5;
+ font-family: 'Inter', sans-serif;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ }
+
+ .infographic-container {
+ width: 1080px;
+ height: 1350px;
+ background-color: var(--bg-warm);
+ padding: 40px;
+ position: relative;
+ overflow: hidden;
+ color: var(--text-main);
+ box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+ }
+
+ header {
+ display: flex;
+ align-items: center;
+ margin-bottom: 30px;
+ }
+
+ .logo {
+ width: 50px;
+ height: 50px;
+ margin-right: 20px;
+ background: linear-gradient(135deg, var(--accent-orange), #f2a28c);
+ clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+ }
+
+ h1 {
+ font-size: 52px;
+ font-weight: 800;
+ margin: 0;
+ letter-spacing: -1.5px;
+ }
+
+ .subtitle {
+ font-size: 20px;
+ color: var(--text-light);
+ margin-top: 5px;
+ }
+
+ .grid-6 {
+ display: grid;
+ grid-template-columns: repeat(6, 1fr);
+ gap: 12px;
+ margin-bottom: 30px;
+ }
+
+ .table-container {
+ width: 100%;
+ border-radius: 16px;
+ overflow: hidden;
+ box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+ background: var(--white);
+ margin-bottom: 30px;
+ }
+
+ table {
+ width: 100%;
+ border-collapse: collapse;
+ table-layout: fixed;
+ }
+
+ th {
+ padding: 15px 10px;
+ font-size: 14px;
+ color: white;
+ text-align: center;
+ }
+
+ .th-label { background-color: var(--white); color: var(--text-light); text-align: left; width: 140px; font-weight: 400;}
+ .th-vm { background-color: var(--accent-tan); color: var(--text-main); }
+ .th-app { background-color: var(--accent-orange); }
+ .th-func { background-color: var(--accent-charcoal); }
+ .th-aci { background-color: var(--accent-tan); color: var(--text-main); }
+ .th-aks { background-color: var(--accent-orange); }
+ .th-aca { background-color: var(--accent-charcoal); }
+
+ td {
+ padding: 12px 10px;
+ font-size: 11px;
+ line-height: 1.4;
+ border-bottom: 1px solid #eee;
+ vertical-align: top;
+ }
+
+ tr:nth-child(even) { background-color: #faf9f7; }
+ .row-label { font-weight: 600; color: var(--text-light); background-color: var(--white) !important; border-right: 1px solid #eee; }
+
+ .strength-card {
+ background: var(--white);
+ padding: 15px;
+ border-radius: 12px;
+ border-top: 4px solid var(--accent-orange);
+ box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+ }
+
+ .strength-card h3 {
+ font-size: 13px;
+ margin: 0 0 8px 0;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ }
+
+ .strength-card p {
+ font-size: 11px;
+ margin: 0;
+ line-height: 1.5;
+ }
+
+ .use-when-card {
+ background: #f8f6f2;
+ padding: 15px;
+ border-radius: 12px;
+ min-height: 140px;
+ }
+
+ .use-when-card h3 {
+ font-size: 13px;
+ margin-top: 0;
+ border-bottom: 1px solid #ddd;
+ padding-bottom: 5px;
+ }
+
+ .use-when-card ul {
+ padding-left: 15px;
+ margin: 8px 0 0 0;
+ }
+
+ .use-when-card li {
+ font-size: 10px;
+ margin-bottom: 5px;
+ line-height: 1.3;
+ }
+
+ footer {
+ background-color: var(--accent-tan);
+ padding: 25px;
+ border-radius: 16px;
+ margin-top: 20px;
+ position: absolute;
+ bottom: 40px;
+ width: calc(100% - 80px);
+ }
+
+ footer h4 { margin: 0 0 10px 0; font-size: 16px; }
+ footer p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--accent-charcoal); }
+
+ .tag {
+ font-weight: 800;
+ display: inline-block;
+ margin-right: 5px;
+ }
+ .yes { color: #2d6a4f; font-weight: 600; }
+ .no { color: #a4161a; opacity: 0.5; }
+ </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-icon">☁️</div>
-  <div>
-    <h1>Which Azure Compute Service Should You Use?</h1>
-    <div class="subtitle">Same cloud. Six powerful ways to run your code. Here's how to pick:</div>
-  </div>
+<div class="infographic-container">
+ <header>
+ <div class="logo"></div>
+ <div>
+ <h1>Which Azure Compute Service Should You Use?</h1>
+ <div class="subtitle">Cloud Architecture Decision Guide • 2026 Edition</div>
+ </div>
+ </header>
+
+ <div class="table-container">
+ <table>
+ <thead>
+ <tr>
+ <th class="th-label">CATEGORY</th>
+ <th class="th-vm">Virtual Machines</th>
+ <th class="th-app">App Service</th>
+ <th class="th-func">Functions</th>
+ <th class="th-aci">Container Inst.</th>
+ <th class="th-aks">Kubernetes (AKS)</th>
+ <th class="th-aca">Container Apps</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td class="row-label">Compute Model</td>
+ <td>IaaS</td>
+ <td>PaaS</td>
+ <td>Serverless FaaS</td>
+ <td>CaaS, simple</td>
+ <td>Kubernetes Orchestration</td>
+ <td>Serverless CaaS</td>
+ </tr>
+ <tr>
+ <td class="row-label">Best For</td>
+ <td>Legacy apps, full OS control, custom runtimes</td>
+ <td>Web apps, APIs, fast managed hosting</td>
+ <td>Event-driven logic, micro-APIs, data jobs</td>
+ <td>Simple isolated containers, short runs</td>
+ <td>Deep K8s control, large microservices</td>
+ <td>Microservices, web apps, rapid scaling</td>
+ </tr>
+ <tr>
+ <td class="row-label">Control</td>
+ <td>Maximum, full OS and patching</td>
+ <td>Medium, managed OS and runtime</td>
+ <td>Low, fully abstracted</td>
+ <td>Medium, isolated but limited</td>
+ <td>High, manage cluster, abstract OS</td>
+ <td>Medium, managed K8s underneath</td>
+ </tr>
+ <tr>
+ <td class="row-label">Scaling</td>
+ <td>Manual or VM Scale Sets</td>
+ <td>Autoscale by instance count</td>
+ <td>Rapid consumption-based</td>
+ <td>Minimal, single container</td>
+ <td>HPA, VPA, cluster autoscaler</td>
+ <td>KEDA, HTTP and event-driven</td>
+ </tr>
+ <tr>
+ <td class="row-label">Cost Model</td>
+ <td>Pay-as-you-go, reserved instances</td>
+ <td>Dedicated plans, tiered pricing</td>
+ <td>Pay per execution / Premium plan</td>
+ <td>Per second vCPU and memory</td>
+ <td>Pay for worker nodes, free control plane</td>
+ <td>Pay per request or Dedicated plans</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+
+ <div class="grid-6">
+ <div class="strength-card">
+ <h3>VMs</h3>
+ <p>Complete ownership, total control, maximum flexibility.</p>
+ </div>
+ <div class="strength-card" style="border-top-color: var(--accent-charcoal);">
+ <h3>App Service</h3>
+ <p>Production web host, integrated CI/CD, push and deploy.</p>
+ </div>
+ <div class="strength-card" style="border-top-color: var(--accent-tan);">
+ <h3>Functions</h3>
+ <p>Serverless FaaS, event-triggered, pay only for runtime.</p>
+ </div>
+ <div class="strength-card">
+ <h3>ACI</h3>
+ <p>Instant spin-up, no orchestration needed for quick tasks.</p>
+ </div>
+ <div class="strength-card" style="border-top-color: var(--accent-charcoal);">
+ <h3>AKS</h3>
+ <p>Ultimate container orchestration, full cluster power.</p>
+ </div>
+ <div class="strength-card" style="border-top-color: var(--accent-tan);">
+ <h3>Container Apps</h3>
+ <p>Simplified containers, Dapr and KEDA scaling.</p>
+ </div>
+ </div>
+
+ <div class="table-container">
+ <table>
+ <thead>
+ <tr style="height: 40px;">
+ <th class="th-label" style="background: #eee; color: #333; font-weight: bold; font-size: 10px;">FEATURE GRID</th>
+ <th class="th-vm" style="font-size: 10px;">VM</th>
+ <th class="th-app" style="font-size: 10px;">App Svc</th>
+ <th class="th-func" style="font-size: 10px;">Func</th>
+ <th class="th-aci" style="font-size: 10px;">ACI</th>
+ <th class="th-aks" style="font-size: 10px;">AKS</th>
+ <th class="th-aca" style="font-size: 10px;">ACA</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="row-label">Web-facing apps</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">Microservices</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">Long-running</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">Full K8s access</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td></tr>
+ <tr><td class="row-label">Event triggers</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">Simple network</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">GitOps support</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ <tr><td class="row-label">Built-in KEDA</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+ </tbody>
+ </table>
+ </div>
+
+ <div class="grid-6">
+ <div class="use-when-card">
+ <h3>VMs</h3>
+ <ul>
+ <li>Full OS control needed.</li>
+ <li>Legacy non-container apps.</li>
+ <li>Compliance hardware needs.</li>
+ </ul>
+ </div>
+ <div class="use-when-card">
+ <h3>App Service</h3>
+ <ul>
+ <li>Fastest path to web hosting.</li>
+ <li>Built-in CI/CD and SSL.</li>
+ <li>Focus on code, not infra.</li>
+ </ul>
+ </div>
+ <div class="use-when-card">
+ <h3>Functions</h3>
+ <ul>
+ <li>Queues, timers, HTTP triggers.</li>
+ <li>Zero idle cost execution.</li>
+ <li>Rapid autoscaling for bursts.</li>
+ </ul>
+ </div>
+ <div class="use-when-card">
+ <h3>ACI</h3>
+ <ul>
+ <li>Quick isolated containers.</li>
+ <li>CI/CD build agents/test.</li>
+ <li>Short-lived batch jobs.</li>
+ </ul>
+ </div>
+ <div class="use-when-card">
+ <h3>AKS</h3>
+ <ul>
+ <li>Full custom networking.</li>
+ <li>Large-scale microservices.</li>
+ <li>Service mesh & GitOps.</li>
+ </ul>
+ </div>
+ <div class="use-when-card">
+ <h3>Container Apps</h3>
+ <ul>
+ <li>K8s benefits, no management.</li>
+ <li>Dapr-based microservices.</li>
+ <li>Scale-to-zero efficiency.</li>
+ </ul>
+ </div>
+ </div>
+
+ <footer>
+ <h4>General Tips & Cost Considerations</h4>
+ <p>All services integrate with Azure DevOps and GitHub Actions. Choose <strong>VMs</strong> for maximum flexibility but higher management overhead. Use <strong>Serverless</strong> (Functions/ACA) for unpredictable workloads. <strong>AKS</strong> is the gold standard for full Kubernetes features and enterprise scale, while <strong>Container Apps</strong> offers the best middle ground for simplified microservices. Don't over-provision; start small and scale based on metrics.</p>
+ </footer>
 </div>
-
-<!-- MAIN TABLE -->
-<table class="main-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th class="col-vm">Azure Virtual Machines</th>
-      <th class="col-app">Azure App Service</th>
-      <th class="col-func">Azure Functions</th>
-      <th class="col-aci">Azure Container Instances</th>
-      <th class="col-aks">Azure Kubernetes Service</th>
-      <th class="col-aca">Azure Container Apps</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="icon-row">
-      <td></td>
-      <td>🖥️</td>
-      <td>🌐</td>
-      <td>⚡</td>
-      <td>📦</td>
-      <td>⎈</td>
-      <td>🚀</td>
-    </tr>
-    <tr>
-      <td>Compute Model</td>
-      <td>IaaS (Infrastructure as a Service)</td>
-      <td>PaaS (Platform as a Service)</td>
-      <td>Serverless FaaS (Function as a Service)</td>
-      <td>CaaS (Container as a Service), simple</td>
-      <td>AKS: CaaS with full K8s orchestration</td>
-      <td>Serverless Container Apps, PaaS/CaaS</td>
-    </tr>
-    <tr>
-      <td>Best For</td>
-      <td>High-control OS, legacy apps, custom setups</td>
-      <td>Web apps, APIs, fully managed hosting</td>
-      <td>Event-driven logic, micro-APIs, data jobs</td>
-      <td>Simple, isolated containers, short runs</td>
-      <td>Deep Kubernetes control, large microservices</td>
-      <td>Microservices, web apps, rapid scaling, integrated platform</td>
-    </tr>
-    <tr>
-      <td>Control & OS</td>
-      <td>Maximum, full OS control and patching</td>
-      <td>Medium, managed OS and runtime</td>
-      <td>Low, fully abstracted platform management</td>
-      <td>Medium, isolated OS container but limited control</td>
-      <td>High, manage Kubernetes cluster but abstract OS</td>
-      <td>Medium, managed K8s environment underneath</td>
-    </tr>
-    <tr>
-      <td>Scaling</td>
-      <td>Manual or VM Scale Sets</td>
-      <td>Autoscale (instance count)</td>
-      <td>Rapid, consumption-based serverless scaling</td>
-      <td>Minimal, single container scaling only</td>
-      <td>Complex K8s scaling (HPA, VPA, cluster autoscaler)</td>
-      <td>Advanced auto-scaling (HTTP, event-driven) with KEDA</td>
-    </tr>
-    <tr>
-      <td>Cost Model</td>
-      <td>Pay-as-you-go, reserved instances</td>
-      <td>Dedicated plans, tiered pricing</td>
-      <td>Consumption (pay per execution) or Premium</td>
-      <td>Per second for vCPU and memory</td>
-      <td>Pay for worker nodes (control plane free)</td>
-      <td>Consumption (pay per request) or Dedicated plans</td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- KEY STRENGTHS -->
-<div class="section-title">Key Strengths & Vibe</div>
-<div class="strengths">
-  <div class="strength-card sc-vm">
-    <div class="sc-title">🖥️ Virtual Machines</div>
-    <div class="sc-desc">Extreme power, your machine, the vibe of complete ownership and total control.</div>
-  </div>
-  <div class="strength-card sc-app">
-    <div class="sc-title">🌐 App Service</div>
-    <div class="sc-desc">Ready to host web apps, integrated CI/CD, the vibe of a production web host.</div>
-  </div>
-  <div class="strength-card sc-func">
-    <div class="sc-title">⚡ Azure Functions</div>
-    <div class="sc-desc">Serverless FaaS, triggered by events, pay only for actual runtime execution.</div>
-  </div>
-  <div class="strength-card sc-aci">
-    <div class="sc-title">📦 Container Instances</div>
-    <div class="sc-desc">Fast spin-up, no orchestration, the vibe of "just run this container now."</div>
-  </div>
-  <div class="strength-card sc-aks">
-    <div class="sc-title">⎈ Kubernetes Service</div>
-    <div class="sc-desc">Container orchestration, ultimate K8s power, scale, and full cluster control.</div>
-  </div>
-  <div class="strength-card sc-aca">
-    <div class="sc-title">🚀 Container Apps</div>
-    <div class="sc-desc">Serverless containers, simplified orchestration, dynamic scaling with Dapr + KEDA.</div>
-  </div>
-</div>
-
-<!-- FEATURES TABLE -->
-<div class="section-title">What It Can Do & Features</div>
-<table class="features-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>VMs</th>
-      <th>App Service</th>
-      <th>Functions</th>
-      <th>ACI</th>
-      <th>AKS</th>
-      <th>Container Apps</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Web-facing apps?</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>Microservices architecture?</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>Long-running processes?</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>Full Kubernetes access?</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="n">❌ No</td>
-    </tr>
-    <tr>
-      <td>Event-driven triggers?</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>Simple networking?</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>GitOps support?</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-    <tr>
-      <td>Built-in KEDA scaling?</td>
-      <td class="n">❌ No</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="n">❌ No</td>
-      <td class="y">✅ Yes</td>
-      <td class="y">✅ Yes</td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- USE WHEN -->
-<div class="section-title">Use [Service] When...</div>
-<div class="use-when">
-  <div class="use-card uc-vm">
-    <div class="uc-title">🖥️ Use VMs When...</div>
-    <div class="uc-item">You need full OS control and custom configurations</div>
-    <div class="uc-item">Running legacy apps that can't be containerized</div>
-    <div class="uc-item">Compliance requires dedicated hardware or specific OS versions</div>
-  </div>
-  <div class="use-card uc-app">
-    <div class="uc-title">🌐 Use App Service When...</div>
-    <div class="uc-item">You want the fastest path to hosting a web app or API</div>
-    <div class="uc-item">You need built-in CI/CD, SSL, and deployment slots</div>
-    <div class="uc-item">Your team wants to focus on code, not infrastructure</div>
-  </div>
-  <div class="use-card uc-func">
-    <div class="uc-title">⚡ Use Functions When...</div>
-    <div class="uc-item">Your workload is event-driven (queues, timers, HTTP triggers)</div>
-    <div class="uc-item">You want pay-per-execution with zero idle cost</div>
-    <div class="uc-item">You need rapid autoscaling for bursty traffic</div>
-  </div>
-  <div class="use-card uc-aci">
-    <div class="uc-title">📦 Use ACI When...</div>
-    <div class="uc-item">You need a quick, isolated container without orchestration</div>
-    <div class="uc-item">Running CI/CD build agents or dev/test workloads</div>
-    <div class="uc-item">Short-lived batch jobs or sidecar containers</div>
-  </div>
-  <div class="use-card uc-aks">
-    <div class="uc-title">⎈ Use AKS When...</div>
-    <div class="uc-item">You need full K8s orchestration with custom networking</div>
-    <div class="uc-item">Managing large-scale microservices across multiple teams</div>
-    <div class="uc-item">You require service mesh, GitOps, or advanced scaling policies</div>
-  </div>
-  <div class="use-card uc-aca">
-    <div class="uc-title">🚀 Use Container Apps When...</div>
-    <div class="uc-item">You want container benefits without managing Kubernetes</div>
-    <div class="uc-item">Building event-driven microservices with Dapr integration</div>
-    <div class="uc-item">You need scale-to-zero with KEDA autoscaling</div>
-  </div>
-</div>
-
-<!-- TIPS -->
-<div class="tips">
-  <div class="tips-title">💡 General Tips & Cost Considerations</div>
-  <div class="tip">All services integrate with Azure DevOps and GitHub Actions</div>
-  <div class="tip">Choose VMs for maximum flexibility but higher management overhead</div>
-  <div class="tip">Use serverless for unpredictable or bursty workloads</div>
-  <div class="tip">AKS for full K8s features and enterprise scale</div>
-  <div class="tip">Container Apps for simplified microservices without cluster management</div>
-  <div class="tip">Functions for event-driven, pay-per-use efficiency</div>
-  <div class="tip">ACI for quick container jobs without orchestration overhead</div>
-  <div class="tip">Compare pricing models carefully — consumption vs dedicated plans</div>
-</div>
-
-<div class="branding"></div>
 
 </body>
 </html>
